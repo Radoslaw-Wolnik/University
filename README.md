@@ -58,7 +58,7 @@ _Zarzadanie Systemami UNIX, bash_[^4].
 
 [^4]: Linux [readme](Linux/README.md)
 
-##LowLewelProgramming
+## LowLewelProgramming
 _Projects in C and Asembly_[^5].
 
 <details>
@@ -76,7 +76,7 @@ _Projects in C and Asembly_[^5].
 _Implementation of key design patterns in oop_[^6].
 
 <details>
-  <summary><h3>Developed skills</summary>
+  <summary>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
