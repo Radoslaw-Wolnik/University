@@ -4,10 +4,15 @@ _The projects made during my academic journey_
 <details>
   <summary><h2>Beginning</summary>
   
-  [readme file](Beginning/README.md)
-  ## Heading
-  * With some
-  * Sub bullets
+  Consists of my firs year small scripts in Python (it have sentimental value)
+  - [ ] **uno** - what was it about
+  - [ ] **Dos** - also
+  - [ ] **Thres** - same
+
+  Here is a simple footnote[^1].
+    [^1]: [readme file](Beginning/README.md)
+    [^2]: To add line breaks within a footnote, prefix new lines with 2 spaces.
+  This is a second line.
 </details>
 
 
