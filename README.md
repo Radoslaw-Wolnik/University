@@ -1,53 +1,40 @@
 # University
 _The projects made during my academic journey_
 
-## Beginning ##
+## Beginning
 _Consists of my firs year small scripts in Python (it have sentimental value)_
-+ **uno** - what was it about
-+ **Dos** - also
-+ **Thres** - same
+- [ ] **uno** - what was it about
+- [ ] **Dos** - also
+- [ ] **Thres** - same
 
+## DataBases
+_project of relational data base for social media site (Oracle)_
+- [ ] **uno** - what was it about
+- [ ] **Dos** - also
+- [ ] **Thres** - same
 
-<details>
-<summary>**DataBases**</summary>
-### project of relational data base for social media site (Oracle)
-- **uno** - what was it about
-- **Dos** - also
-- **Thres** - same
-</details>
+## DataStructures
+_Implementation of basic data structures in Python_
+- [ ] **uno** - what was it about
+- [ ] **Dos** - also
+- [ ] **Thres** - same
 
-<details>
-<summary>**DataStructures**</summary>
-### Implementation of basic data structures in Python
-- **uno** - what was it about
-- **Dos** - also
-- **Thres** - same
-</details>
+## Linux
+_Zarzadanie Systemami UNIX, bash_
+- [ ] **uno** - what was it about
+- [ ] **Dos** - also
+- [ ] **Thres** - same
 
+## LowLewelProgramming
+_projects in C and Asembly_
+- [ ] **uno** - what was it about
+- [ ] **Dos** - also
+- [ ] **Thres** - same
 
-<details>
-<summary>**Linux**</summary>
-### Zarzadanie Systemami UNIX, bash
-- **uno** - what was it about
-- **Dos** - also
-- **Thres** - same
-</details>
+## ObjectOrientedProgramming
+_projects following design patterns for oop_
+- [ ] **uno** - what was it about
+- [ ] **Dos** - also
+- [ ] **Thres** - same
 
-
-<details>
-<summary>**LowLewelProgramming**</summary>
-### projects in C and Asembly
-- **uno** - what was it about
-- **Dos** - also
-- **Thres** - same
-</details>
-
-
-<details>
-<summary>**ObjectOrientedProgramming**</summary>
-### projects following design patterns for oop
-- **uno** - what was it about
-- **Dos** - also
-- **Thres** - same
-</details>
 
