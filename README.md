@@ -1,8 +1,8 @@
 # University
-The projects made during my academic journey
+_The projects made during my academic journey_
 
 ## Beginning ##
-**Consists of my firs year small scripts in Python (it have sentimental value)**
+_Consists of my firs year small scripts in Python (it have sentimental value)_
 + **uno** - what was it about
 + **Dos** - also
 + **Thres** - same
