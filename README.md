@@ -1,8 +1,16 @@
 # University
 _The projects made during my academic journey_
 
-- Beginning [readme](Beginning/README.md)
-- Next
+# A collapsible section with markdown
+<details>
+  <summary><h2>Beginning<\h2></summary>
+  [readme file](Beginning/README.md)
+  ## Heading
+  * With some
+  * Sub bullets
+</details>
+
+
 
 ## DataBases
 _project of relational data base for social media site (Oracle)_
