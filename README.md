@@ -2,7 +2,7 @@
 _The projects made during my academic journey_
 
 <details>
-  <summary># Beginning</summary>
+  <summary><h2>Beginning</summary>
   
   [readme file](Beginning/README.md)
   ## Heading
