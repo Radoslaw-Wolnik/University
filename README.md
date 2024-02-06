@@ -13,7 +13,7 @@ _The projects made during my academic journey_
   
 </details>
 
-[^1]: [readme file](Beginning/README.md)
+[^1]: Beginning [readme](Beginning/README.md)
 
 
 ## DataBases
