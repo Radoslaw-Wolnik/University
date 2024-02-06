@@ -5,7 +5,7 @@ _The projects made during my academic journey_
 _Consists of my firs year small scripts in Python (it have sentimental value)_[^1].
 
 <details>
-  <summary><h3></summary>
+  <summary><h3>Developed Skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
