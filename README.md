@@ -1,6 +1,6 @@
 # University
 _The projects made during my academic journey_
-<br><br>
+<br>
 
 ## Beginning
 _Consists of my firs year small scripts in Python (it have sentimental value)_[^1].
