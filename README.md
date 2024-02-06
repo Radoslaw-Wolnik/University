@@ -73,7 +73,7 @@ _Projects in C and Asembly_[^5].
 [^5]: LowLewelProgramming [readme](LowLewelProgramming/README.md)
 
 ## ObjectOrientedProgramming
-_Implementation of key design patterns in oop_[^5].
+_Implementation of key design patterns in oop_[^6].
 
 <details>
   <summary><h3>Developed skills</summary>
@@ -84,5 +84,5 @@ _Implementation of key design patterns in oop_[^5].
   - **I have now** - explonation
 </details>
 
-[^5]: ObjectOrientedProgramming [readme](ObjectOrientedProgramming/README.md)
+[^6]: ObjectOrientedProgramming [readme](ObjectOrientedProgramming/README.md)
 
