@@ -4,15 +4,13 @@ _The projects made during my academic journey_
 <details>
   <summary><h2>Beginning</summary>
   
-  Consists of my firs year small scripts in Python (it have sentimental value)[^1].
   - [ ] **uno** - what was it about
   - [ ] **Dos** - also
   - [ ] **Thres** - same
   
-  This is a second line.
-  
 </details>
 
+Consists of my firs year small scripts in Python (it have sentimental value)[^1].
 [^1]: Beginning [readme](Beginning/README.md)
 
 
