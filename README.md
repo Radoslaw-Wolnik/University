@@ -14,6 +14,7 @@ _Consists of my firs year small scripts in Python (it have sentimental value)_[^
 </details>
 
 [^1]: Beginning [readme](Beginning/README.md)
+<br>
 
 ## DataBases
 _project of relational data base for social media site (Oracle)_[^2].
