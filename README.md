@@ -2,9 +2,9 @@
 _The projects made during my academic journey_
 
 <details>
-  <summary><h2>Beginning[^1]</summary>
+  <summary><h2>Beginning</summary>
   
-  Consists of my firs year small scripts in Python (it have sentimental value)
+  Consists of my firs year small scripts in Python (it have sentimental value)[^1].
   - [ ] **uno** - what was it about
   - [ ] **Dos** - also
   - [ ] **Thres** - same
