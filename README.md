@@ -17,9 +17,10 @@ _Consists of my firs year small scripts in Python (it have sentimental value)_[^
 <details>
   <summary><h2>DataBases</summary>
   
-  - [ ] **uno** - what was it about
-  - [ ] **Dos** - also
-  - [ ] **Thres** - same
+  - **Key** - what was it about
+  - **Skills** - same
+  - **That** - more information
+  - **I have now** - explonation
 </details>
 
 _project of relational data base for social media site (Oracle)_[^2].
@@ -29,9 +30,10 @@ _project of relational data base for social media site (Oracle)_[^2].
 <details>
   <summary><h2>DataStructures</summary>
   
-  - [ ] **uno** - what was it about
-  - [ ] **Dos** - also
-  - [ ] **Thres** - same
+  - **Key** - what was it about
+  - **Skills** - same
+  - **That** - more information
+  - **I have now** - explonation
 </details>
 
 _Implementation of basic data structures in Python_[^3].
@@ -41,9 +43,10 @@ _Implementation of basic data structures in Python_[^3].
 <details>
   <summary><h2>Linux</summary>
   
-  - [ ] **uno** - what was it about
-  - [ ] **Dos** - also
-  - [ ] **Thres** - same
+  - **Key** - what was it about
+  - **Skills** - same
+  - **That** - more information
+  - **I have now** - explonation
 </details>
 
 _Zarzadanie Systemami UNIX, bash_[^4].
@@ -54,9 +57,10 @@ _Zarzadanie Systemami UNIX, bash_[^4].
 <details>
   <summary><h2>LowLewelProgramming</summary>
   
-  - [ ] **uno** - what was it about
-  - [ ] **Dos** - also
-  - [ ] **Thres** - same
+  - **Key** - what was it about
+  - **Skills** - same
+  - **That** - more information
+  - **I have now** - explonation
 </details>
 
 _Projects in C and Asembly_[^5].
@@ -66,9 +70,10 @@ _Projects in C and Asembly_[^5].
 <details>
   <summary><h2>ObjectOrientedProgramming</summary>
   
-  - [ ] **uno** - what was it about
-  - [ ] **Dos** - also
-  - [ ] **Thres** - same
+  - **Key** - what was it about
+  - **Skills** - same
+  - **That** - more information
+  - **I have now** - explonation
 </details>
 
 _Implementation of key design patterns in oop_[^5].
