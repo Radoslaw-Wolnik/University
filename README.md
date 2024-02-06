@@ -1,7 +1,8 @@
 # University
 _The projects made during my academic journey_
 
-[Beginning](Beginning/README.md)
+- Beginning [readme](Beginning/README.md)
+- Next
 
 ## DataBases
 _project of relational data base for social media site (Oracle)_
