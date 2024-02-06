@@ -1,8 +1,11 @@
 # University
 _The projects made during my academic journey_
 
+## Beginning
+_Consists of my firs year small scripts in Python (it have sentimental value)_[^1].
+
 <details>
-  <summary><h2>Beginning</summary>
+  <summary><h3>Skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -10,7 +13,6 @@ _The projects made during my academic journey_
   - **I have now** - explonation
 </details>
 
-_Consists of my firs year small scripts in Python (it have sentimental value)_[^1].
 [^1]: Beginning [readme](Beginning/README.md)
 
 
