@@ -4,9 +4,10 @@ _The projects made during my academic journey_
 <details>
   <summary><h2>Beginning</summary>
   
-  - [ ] **uno** - what was it about
-  - [ ] **Dos** - also
-  - [ ] **Thres** - same
+  - **Key** - what was it about
+  - **Skills** - same
+  - **That** - more information
+  - **I have now** - explonation
 </details>
 
 _Consists of my firs year small scripts in Python (it have sentimental value)_[^1].
