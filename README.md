@@ -1,9 +1,9 @@
 # University
 _The projects made during my academic journey_
 
-# A collapsible section with markdown
 <details>
-  <summary><h2>Beginning<\h2></summary>
+  <summary># Beginning</summary>
+  
   [readme file](Beginning/README.md)
   ## Heading
   * With some
