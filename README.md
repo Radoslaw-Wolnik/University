@@ -19,7 +19,7 @@ _Consists of my firs year small scripts in Python (it have sentimental value)_[^
 _project of relational data base for social media site (Oracle)_[^2].
 
 <details>
-  <summary><h3>Developed skills</summary>
+  <summary>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -33,7 +33,7 @@ _project of relational data base for social media site (Oracle)_[^2].
 _Implementation of basic data structures in Python_[^3].
 
 <details>
-  <summary><h3>Developed skills</summary>
+  <summary>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -48,7 +48,7 @@ _Implementation of basic data structures in Python_[^3].
 _Zarzadanie Systemami UNIX, bash_[^4].
 
 <details>
-  <summary><h3>Developed skills</summary>
+  <summary>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -62,7 +62,7 @@ _Zarzadanie Systemami UNIX, bash_[^4].
 _Projects in C and Asembly_[^5].
 
 <details>
-  <summary><h3>Developed skills</summary>
+  <summary>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
