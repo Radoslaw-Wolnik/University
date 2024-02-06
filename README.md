@@ -9,7 +9,9 @@ _The projects made during my academic journey_
   - [ ] **Dos** - also
   - [ ] **Thres** - same
 
-  Here is a simple footnote[^1].
+  Here is a simple footnote[^1]
+  
+  A footnote can also have multiple lines[^2].
   
     [^1]: [readme file](Beginning/README.md)
     [^2]: To add line breaks within a footnote, prefix new lines with 2 spaces.
