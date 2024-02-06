@@ -7,10 +7,9 @@ _The projects made during my academic journey_
   - [ ] **uno** - what was it about
   - [ ] **Dos** - also
   - [ ] **Thres** - same
-  
 </details>
 
-Consists of my firs year small scripts in Python (it have sentimental value)[^1].
+_Consists of my firs year small scripts in Python (it have sentimental value)_[^1].
 [^1]: Beginning [readme](Beginning/README.md)
 
 
