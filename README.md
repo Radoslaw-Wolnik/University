@@ -12,6 +12,7 @@ _The projects made during my academic journey_
   This is a second line.
   
 </details>
+
 [^1]: [readme file](Beginning/README.md)
 
 
