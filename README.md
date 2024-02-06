@@ -29,7 +29,7 @@ _project of relational data base for social media site (Oracle)_[^2].
 
 [^2]: Database [readme](DataBases/README.md)
 
-##DataStructures
+## DataStructures
 _Implementation of basic data structures in Python_[^3].
 
 <details>
