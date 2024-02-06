@@ -4,9 +4,9 @@
 <details>
 <summary>**Beginning**</summary>
 ### Consists of my firs year small scripts in Python (it have sentimental value)
-- **uno** - what was it about
-- **Dos** - also
-- **Thres** - same
++ **uno** - what was it about
++ **Dos** - also
++ **Thres** - same
 </details>
 
 <details>
