@@ -1,11 +1,7 @@
 # University
 _The projects made during my academic journey_
 
-## Beginning
-_Consists of my firs year small scripts in Python (it have sentimental value)_
-- [ ] **uno** - what was it about
-- [ ] **Dos** - also
-- [ ] **Thres** - same
+[Beginning](University/Beginning/README.md)
 
 ## DataBases
 _project of relational data base for social media site (Oracle)_
