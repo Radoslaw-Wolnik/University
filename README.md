@@ -5,7 +5,7 @@ _The projects made during my academic journey_
 _Consists of my firs year small scripts in Python (it have sentimental value)_[^1].
 
 <details>
-  <summary><h3>Skills</summary>
+  <summary><h3></summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -15,9 +15,11 @@ _Consists of my firs year small scripts in Python (it have sentimental value)_[^
 
 [^1]: Beginning [readme](Beginning/README.md)
 
+## DataBases
+_project of relational data base for social media site (Oracle)_[^2].
 
 <details>
-  <summary><h2>DataBases</summary>
+  <summary><h3>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -25,12 +27,13 @@ _Consists of my firs year small scripts in Python (it have sentimental value)_[^
   - **I have now** - explonation
 </details>
 
-_project of relational data base for social media site (Oracle)_[^2].
 [^2]: Database [readme](DataBases/README.md)
 
+##DataStructures
+_Implementation of basic data structures in Python_[^3].
 
 <details>
-  <summary><h2>DataStructures</summary>
+  <summary><h3>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -38,12 +41,14 @@ _project of relational data base for social media site (Oracle)_[^2].
   - **I have now** - explonation
 </details>
 
-_Implementation of basic data structures in Python_[^3].
 [^3]: DataStructures [readme](DataStructures/README.md)
 
 
+## Linux
+_Zarzadanie Systemami UNIX, bash_[^4].
+
 <details>
-  <summary><h2>Linux</summary>
+  <summary><h3>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -51,13 +56,13 @@ _Implementation of basic data structures in Python_[^3].
   - **I have now** - explonation
 </details>
 
-_Zarzadanie Systemami UNIX, bash_[^4].
 [^4]: Linux [readme](Linux/README.md)
 
-
+##LowLewelProgramming
+_Projects in C and Asembly_[^5].
 
 <details>
-  <summary><h2>LowLewelProgramming</summary>
+  <summary><h3>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -65,12 +70,13 @@ _Zarzadanie Systemami UNIX, bash_[^4].
   - **I have now** - explonation
 </details>
 
-_Projects in C and Asembly_[^5].
 [^5]: LowLewelProgramming [readme](LowLewelProgramming/README.md)
 
+## ObjectOrientedProgramming
+_Implementation of key design patterns in oop_[^5].
 
 <details>
-  <summary><h2>ObjectOrientedProgramming</summary>
+  <summary><h3>Developed skills</summary>
   
   - **Key** - what was it about
   - **Skills** - same
@@ -78,6 +84,5 @@ _Projects in C and Asembly_[^5].
   - **I have now** - explonation
 </details>
 
-_Implementation of key design patterns in oop_[^5].
 [^5]: ObjectOrientedProgramming [readme](ObjectOrientedProgramming/README.md)
 
