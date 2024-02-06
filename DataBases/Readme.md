@@ -1,1 +1,0 @@
-Realational data bases Oracle
