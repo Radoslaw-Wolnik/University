@@ -2,7 +2,7 @@
 The projects made during my academic journey
 
 ## Beginning ##
-** Consists of my firs year small scripts in Python (it have sentimental value) **
+**Consists of my firs year small scripts in Python (it have sentimental value)**
 + **uno** - what was it about
 + **Dos** - also
 + **Thres** - same
