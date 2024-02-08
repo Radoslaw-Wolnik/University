@@ -1,10 +1,10 @@
 // Package RPN
 // import Stack.java
 // HashMap
-package main.java.RPN;
+package RPN;
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import java.util.HashMap;
-import main.java.Stack.Stack;
+import Stack.Stack;
 import main.java.RPN.Exceptions.UnknownOperationException;
 
 

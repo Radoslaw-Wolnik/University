@@ -1,4 +1,4 @@
-package main.java.RPN.Exceptions;
+package RPN.Exceptions;
 
 // Package RPN
 // used in SolveOperation.java -- > SolveRPN.java -- > RPN.java

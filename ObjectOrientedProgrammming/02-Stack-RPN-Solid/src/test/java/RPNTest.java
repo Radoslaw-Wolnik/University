@@ -1,13 +1,11 @@
-package src.test.java.testRPN;
-
-import main.java.RPN.Exceptions.InvalidEquationException;
-import main.java.RPN.Exceptions.UnknownOperationException;
+import RPN.Exceptions.InvalidEquationException;
+import RPN.Exceptions.UnknownOperationException;
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import org.junit.Test;
 
 import java.util.EmptyStackException;
 
-import main.java.RPN.RPN;
+import RPN.RPN;
 
 import static org.junit.Assert.*;
 
@@ -36,12 +34,12 @@ public class RPNTest {
         try{
             result = toCatch.Value();
         }
-        catch (UnknownOperationException u){
-            System.out.println("Unknown operation solve");
-        }
-        catch (InvalidEquationException i){
-            System.out.println("Invalid equation rpn");
-        }
+        //catch (UnknownOperationException u){
+        //    System.out.println("Unknown operation solve");
+        //}
+        //catch (InvalidEquationException i){
+        //    System.out.println("Invalid equation rpn");
+        //}
         catch (NotImplementedException n){
             System.out.println("not implemented in solve");
         }

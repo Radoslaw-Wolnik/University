@@ -1,6 +1,7 @@
-package main.java.RPN;
+package RPN;
 //import SolveRPN.java
 /* zgodnosc z solid*/
+import RPN.SolveRPN;
 
 
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
@@ -27,7 +28,7 @@ public class RPN {
         return Equation;
     }
 
-    public int Value() throws UnknownOperationException, InvalidEquationException, NotImplementedException {
+    public int Value() throws main.java.RPN.Exceptions.UnknownOperationException, main.java.RPN.Exceptions.InvalidEquationException, NotImplementedException {
         SolveRPN result = new SolveRPN(Equation);
         return result.SolveItself();
     }

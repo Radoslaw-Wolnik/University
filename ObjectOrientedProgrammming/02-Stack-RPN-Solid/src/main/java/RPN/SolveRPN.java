@@ -1,5 +1,8 @@
-package main.java.RPN;
-import main.java.Stack.Stack;
+package RPN;
+import Stack.Stack;
+import RPN.Exceptions.UnknownOperationException;
+import RPN.Exceptions.InvalidEquationException;
+import RPN.SolveOperation;
 import RPN.Exceptions.*;
 // import SolveOperation
 

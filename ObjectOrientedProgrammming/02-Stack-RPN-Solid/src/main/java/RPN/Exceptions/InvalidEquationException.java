@@ -1,4 +1,4 @@
-package main.java.RPN.Exceptions;
+package RPN.Exceptions;
 // used in SolveRPN.java -- > RPN.java
 
 public class InvalidEquationException extends Exception {

@@ -1,5 +1,3 @@
-package src.test.java.testStack;// package Stack
-
 import org.junit.*;
 
 
@@ -8,7 +6,7 @@ import java.util.EmptyStackException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
-import main.java.Stack.Stack;
+import Stack.Stack;
 public class StackTest {
 
     Stack sut;
