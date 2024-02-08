@@ -5,7 +5,7 @@ package RPN;
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import java.util.HashMap;
 import Stack.Stack;
-import main.java.RPN.Exceptions.UnknownOperationException;
+import RPN.Exceptions.UnknownOperationException;
 
 
 public class SolveOperation {

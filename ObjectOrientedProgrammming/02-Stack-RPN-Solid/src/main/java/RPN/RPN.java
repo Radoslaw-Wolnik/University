@@ -1,4 +1,6 @@
 package RPN;
+import RPN.Exceptions.UnknownOperationException;
+import RPN.Exceptions.InvalidEquationException;
 //import SolveRPN.java
 /* zgodnosc z solid*/
 import RPN.SolveRPN;
@@ -28,7 +30,7 @@ public class RPN {
         return Equation;
     }
 
-    public int Value() throws main.java.RPN.Exceptions.UnknownOperationException, main.java.RPN.Exceptions.InvalidEquationException, NotImplementedException {
+    public int Value() throws UnknownOperationException, InvalidEquationException, NotImplementedException {
         SolveRPN result = new SolveRPN(Equation);
         return result.SolveItself();
     }

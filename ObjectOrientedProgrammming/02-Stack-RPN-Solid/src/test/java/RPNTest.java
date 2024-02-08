@@ -34,12 +34,12 @@ public class RPNTest {
         try{
             result = toCatch.Value();
         }
-        //catch (UnknownOperationException u){
-        //    System.out.println("Unknown operation solve");
-        //}
-        //catch (InvalidEquationException i){
-        //    System.out.println("Invalid equation rpn");
-        //}
+        catch (UnknownOperationException u){
+            System.out.println("Unknown operation solve");
+        }
+        catch (InvalidEquationException i){
+            System.out.println("Invalid equation rpn");
+        }
         catch (NotImplementedException n){
             System.out.println("not implemented in solve");
         }
