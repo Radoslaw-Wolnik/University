@@ -8,3 +8,7 @@ _Implementation of key design patterns in oop_
 ## ToDo
 - [ ] translate to english READMES
 - [ ] code revision (is it readable for english speaking folks)
+- [ ] extracurricular Caffe implementing Decorator design pattern
+- [ ] extracurricular implementation of Abstract Factory / Factory Method design pattern
+- [ ] extracurricular implementation of Prototype design pattern
+- [ ] revise Julia's projects and think of my own implementations
