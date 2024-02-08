@@ -6,5 +6,5 @@ _Implementation of key design patterns in oop_
 * **04-WarGames-Observer** - implementing Observer design pattern in project representing two generals with their armies that battle each other
 
 ## ToDo
-- [ ] translate to english
-- [ ] code revision
+- [ ] translate to english READMES
+- [ ] code revision (is it readable for english speaking folks)
