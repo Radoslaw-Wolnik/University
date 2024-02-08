@@ -6,9 +6,9 @@ _Implementation of key design patterns in oop_
 * **04-WarGames-Observer** - implementing Observer design pattern in project representing two generals with their armies that battle each other
 
 ## ToDo
-- [ ] translate to english READMES
+- [ ] translate READMES to english
 - [ ] code revision (is it readable for english speaking folks)
 - [ ] extracurricular Caffe implementing Decorator design pattern
 - [ ] extracurricular implementation of Abstract Factory / Factory Method design pattern
 - [ ] extracurricular implementation of Prototype design pattern
-- [ ] revise Julia's projects and think of my own implementations
+- [ ] revise Julia's projects and think of my own implementations (she's got very good examples)
