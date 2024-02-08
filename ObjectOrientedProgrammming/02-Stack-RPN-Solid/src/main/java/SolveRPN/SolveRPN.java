@@ -1,4 +1,4 @@
-// Package RPN
+package StackRPN;
 // import Stack.java
 // import SolveOperation
 

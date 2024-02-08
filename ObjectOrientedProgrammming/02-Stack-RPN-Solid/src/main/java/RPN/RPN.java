@@ -1,6 +1,7 @@
 //package RPN
 //import SolveRPN.java
 /* zgodnosc z solid*/
+package StackRPN;
 
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 //import java.util.EmptyStackException;

@@ -1,7 +1,7 @@
 // Package RPN
 // import Stack.java
 // HashMap
-
+package StackRPN;
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import java.util.HashMap;
 

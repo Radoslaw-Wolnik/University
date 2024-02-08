@@ -1,14 +1,18 @@
 // Package RPN
 
-import org.junit.*;
+import jdk.jshell.spi.ExecutionControl.NotImplementedException;
+import org.junit.Test;
 
 import java.util.EmptyStackException;
-import jdk.jshell.spi.ExecutionControl.NotImplementedException;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
+import RPN.RPN;
 
 public class RPNTest {
 
-    RPN sut;
+    private RPN sut;
 
     // check creation
 
