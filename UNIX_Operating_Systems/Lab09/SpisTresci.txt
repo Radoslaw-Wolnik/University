@@ -1,0 +1,87 @@
+l: so
+p: 2@2^UG
+
+Lab 07 Lab 07 Lab 07 Lab 07 07 07 07 07 -----------------------------------------------------
+
+Zadanie 1: 
+Otworz plik z 100 liczbami calkowitymi i znajdz najwieksza i najmniejsza; 
+jeśli bedzie problem z otwarciem pliku to napisz na stderr
+
+Zadanie 2: 
+Program ktory pyta uzytkownika o n liczb - uzytkownik podaje ile to n
+dodatnie zapisuje do pliku dodatnie.txt, ujemne do ujemne.txt, 0 stderr
+
+Zadanie 3:
+pobiera od uzytkownika dwa napisy i porownuje je (ktory jest wczesniej a ktory jest pozniej)
+
+Zadanie 4: 
+Program pobiera od uzytkownika Imie i Nazwisko 
+nastepnie sprawdza czy podane dane sa w pliku baza.txt
+
+Zadanie 5:
+Program tworzy plik przedmioty.txt i wpiusuje 4 słowa do środka
+
+Zadanie 6:
+Program ktory umozliwia usunięcie ; skopiowanie lub przeniesienie do folderu "inne" ; 
+pliku utworzonego program wczesniej
+
+Zadanie 7:
+Program tworzy archiwum *tar lub *zip 
+Polecenia Systemowe
+
+Zadanie 8:
+Program ktory wyswietla foldery w katalogu domowym
+oraz ten ktory ma najdluzsza i najkrotsza nazwe
+Strumienie Potokowe
+
+Zadanie 9:
+Program ktory wyswietla ktory z dwóch wskazanych plikow ma więcej słów
+Strumienie Potokowe
+
+
+
+Lab 08 Lab 08 Lab 08 Lab 08 08 08 08 08 -----------------------------------------------------
+
+Zadanie 1:
+Co wyswietli program w zaleznosci od tego czy sa czy nie ma wait()
+fork() analiza
+
+Zadanie 2:
+Obsługa sygnałow
+Program nieskonczona petla 
+; wyslanie SIGINT wyswietla "Jesetem niesmiertelny"
+; wyslanie SIGHUP konczy reagowanie na SIGINT
+
+Zadanie 3:
+Program ktory tworzy proces potomny i czeka az proces potomny ukonczy dzialanie
+Proces potomny losuje liczbe z zakresu 1-50 i jesli jest %5 == 0 to konczy dzialanie
+
+Zadanie 4:
+Proces nadrzedny tworzy dwa potomne
+i losuje liczbe od 1 do 50 
+jesli liczba jest wieksza od 40 zabija Kid2
+jesli liczba jest mniejsza od 10 zabija Kid1
+Procesy potomne while(1) {sleep(1);}
+
+Zadanie 5:
+Program ktory tworzy watek i czeka na jego zakonczenie
+wątek losuje liczbe 1-50 jesli jest % 5 == 0 konczy dzialanie
+
+
+
+
+Lab 09 Lab 09 Lab 09 Lab 09 09 09 09 09 -----------------------------------------------------
+
+Zadanie 1:
+Uzywajac Mutexu zarzadaj zasobem do ktorego ma dostep wiele watkow 
+
+Zadanie 2: 
+Uzywajac Semaforu zarzadaj zasobami do ktorych ma dostep wiele watkow
+
+Zadanie 3: 
+Uzywajac barier zsynchronizuj wieel watkow tak aby wykonywaly sie w tym samym czasie 
+- czekaja az wszystkie dojda do punktu w ktorym jest bariera (okreslamy ilosc w init bariry)
+
+Zadanie 4:
+Uzywajac sygnalow wysylaj do programow dzieci dane
+Programy dzieci maja dwa wątki jeden droga drugi swiatla

@@ -1,0 +1,357 @@
+1. 
+a) ps -f
+c) ps -fe
+a) ps -u
+b) ps -au
+c) ps -axu
+
+2. 
+
+>>>>
+z2.sh                     
+#!/bin/bash
+while true; do
+  sleep 5s
+  echo "NApis co 5s"
+done
+exit 0
+<<<<
+
+// r - proces is running in background
+a) jobs -au
+b) jobs -axu
+   jobs -ut <numer terminala>
+   jobs -ut pts/1
+c) 
+   ps -au | grep z2.sh
+   kill STOP PID
+   fg PID
+   kill COUNT PID
+   kill TERM PID // konczy dzialanie ale spokojnie
+d) można zabić proces działający w tle z obu terminali
+e) po zamknięciu terminala do procesó wysyłany jest SIGHUP któy zamyka wszystkie procesy otwrte w bierzącej sesji terminala - nie będzie go
+
+
+3. 
+>>>>
+z3.sh                     
+#!/bin/bash
+while true; do
+  sleep 5s
+  echo "NApis co 5s"
+done
+exit 0
+<<<<
+
+// one can use nohup ./Script.sh &  disown to make it outside terminal session
+nohup ./z3.sh &
+disown
+
+nohup ./z3.sh > /dev/tty &
+disown
+a) nie bedzie istnial
+b) tez nie bedzie istnial
+c) mozna wznowic proces na pierwszym planie
+d) kill PID
+e) nohup ./z3.sh > out.txt &
+bedzie przekierowywal do innego pliku to co zapisywal
+
+
+4. 
+dodatnie.sh int int int
+>>>>
+#!/bin/bash
+if [ $# -ne 3 ]; then
+  echo "Niewlasciwa ilosc argumentwo"
+  exit 0
+fi
+if [ $1 -le 0 ]; then
+  echo "pierwszy arg mniejszy od zera lub rowny"
+  exit 0
+fi
+if [ $2 -le 0 ]; then
+  echo "drugi"
+  exit 0
+fi
+if [ $3 -le 0 ]; then
+  echo "trzeci"
+  exit 0
+fi
+
+echo "all good"
+exit 1
+<<<<
+
+trojkat.sh int int int
+>>>>
+#!/bin/bash
+
+if [ $# -ne 3 ]; then
+  echo "Niewlasciwa ilosc argumentwo"
+  exit 0
+fi
+
+# uruchom dodatnie.sh
+bash dodatnie.sh $1 $2 $3 &
+child=$!
+
+# czeka az skrypt skonczy dzialanie
+wait $child
+
+#get result from child
+res=$?
+echo $res
+
+if [ $res -eq 0 ]; then
+  echo "bok ujemny lub 0"
+  exit 0
+fi
+
+# sprawdz czy mozna zrobic trojkat z bokow a, b, c
+a=$1
+b=$2
+c=$3
+if [ $(($b+$c)) -lt $a ]; then
+  echo "dwa dodane boki nie moga byc mnienjsze niz ten trzeci"
+  echo "za duzy a"
+  exit 0
+fi
+if [ $(($a+$c)) -lt $b ]; then
+  echo "dwa dodane boki nie moga byc mnienjsze niz ten trzeci"
+  echo "za duzy b"
+  exit 0
+fi
+if [ $(($a+$b)) -lt $c ]; then
+  echo "dwa dodane boki nie moga byc mnienjsze niz ten trzeci"
+  echo "za duzy c"
+  exit 0
+fi
+
+# wynik
+echo "all triangulated"
+exit 1
+<<<<
+
+5. 
+
+z5.sh
+>>>
+#!/bin/bash
+trap ./napis.sh USR1
+trap ./koniec.sh USR2
+while true
+  do
+  sleep 5
+done
+exit 0
+<<<
+
+napis.sh
+>>>
+#!/bin/bash
+echo "NApis dowolny"
+exit 0
+<<<
+
+koniec.sh
+>>>
+#!/bin/bash
+pkill napis
+# pkill -f "napis.sh"
+if [ $? -eq 0 ]; then
+  exit 0
+fi
+exit 1
+<<<
+
+6. 
+
+z6.sh
+>>>
+#!/bin/bash
+sigint=true
+
+trap '
+  if $sigint; then
+  echo "Jestem niesmiertelny!"
+  fi
+' SIGINT
+
+trap '
+    echo "nie reguj"
+    sigint=false
+' SIGHUP
+
+while true; do
+    sleep 1
+done
+exit 0
+<<<
+
+
+7. 
+Symulator dwóch dźwigów, które przenoszą materiały budowlane z pierwszego miejsca do
+drugiego. pierwszy przenosi z A do bufora, drugi przenosi z bufora do B
+Zalozenia:
+trzy folder z "materiałami" w środku - plikami (na poczatku w A)
+A B bufor - pomiedzy A i B, ogranicznoa pojemnosc np 3pliki max
+
+trzy programy:
+
+nadzorca dzwigow - SIGUSR1 - tworzy i uruchamia procesy dzwigow; SIGINT - konczy prace procesow i wyswietla wiadomosc
+
+pierwszy dzwig przenosi pojedynczo wszytkie pliki z A do bufora, nie przenosi jesli bufor jest pelen, jak przeniesie wszytko zwraca ile plikow przeniosl
+
+drugi dzwig powininen  pojedynczo przenosic z bufera do B, ma sprawdzac czy cos jest w buforze do przeniesienia, konczy zadanie jesli dzwig 1 sie skonczyl i w buforze nic nie ma. Po zakonczeniu zwraca ilosc przeniesionych plikow
+
+
+Proces nadzorujący (o ile nie zostanie przerwany przez użytkownika) po rozpoczęciu działania, powinien nadzorować pracę dwóch
+dźwigów i wypisywać odpowiednie komunikaty (odnośnie rozpoczęcia pracy dźwigu, zakończenia pracy dźwigu, liczby przeniesionych
+materiałów - dane pobrane od innych procesów). Dodatkowo może posłużyć do komunikacji między procesami symulującymi pracę
+dźwigu oraz po zakończeniu ich pracy powinien zakończyć swoje działanie.
+
+UWAGA !!!
+Pamiętaj, że symulacja powinna zostać utworzona z dokładnie trzech procesów, które są odpowiednio zsynchronizowane oraz każdy z
+tych procesów powinien kończyć swoje działanie w odpowiednim momencie
+
+mkdir A
+mkdir B
+mkdir Bufor 
+
+
+CraneA.sh
+>>>
+#!/bin/bash
+
+self="CraneA.sh"
+done="DONEA"
+count=0
+source="A"
+dest="Buffor"
+
+if [ ! "$(ls -A $source)" ]; then
+    echo "Source directory '$source' is empty."
+    exit 255 
+fi
+
+trap '
+echo "'$self': Started moving a file from '$source' to '$dest'."
+file=$(find $source -type f -maxdepth 1 | head -n 1)
+if [ -n "$file" ]; then
+  mv "$file" $dest    
+  echo "'$self': Moved a file $file from '$source' to '$dest'."
+  count=$(($count+1)) 
+  kill $done $PPID
+else
+  echo "'$self': Stopped moving files due to lack of them"
+  if [ $count -lt 255 ]; then
+    exit $count 
+  fi  
+  exit 0
+fi
+' MOVE
+
+trap '
+  echo "'$self': Stopped moving files."
+  if [ $count -lt 255 ]; then
+    exit $count
+  fi
+  exit 0
+' SIGINT
+
+while true; do
+  sleep 1
+done
+<<<
+
+
+CraneB.sh
+>>>
+#!/bin/bash
+
+self="CraneB.sh"
+done="DONEB"
+count=0
+source="Buffor"
+dest="B"
+
+if [ ! "$(ls -A $source)" ]; then
+    echo "Source directory '$source' is empty."
+    exit 255 
+fi
+
+trap '
+echo "'$self': Started moving a file from '$source' to '$dest'."
+file=$(find $source -type f -maxdepth 1 | head -n 1)
+if [ -n "$file" ]; then
+  mv "$file" $dest    
+  echo "'$self': Moved a file $file from '$source' to '$dest'."
+  count=$(($count+1)) 
+  kill $done $PPID
+else
+  echo "'$self': Stopped moving files due to lack of them"
+  if [ $count -lt 255 ]; then
+    exit $count 
+  fi  
+  exit 0
+fi
+' MOVE
+
+trap '
+  echo "'$self': Stopped moving files."
+  if [ $count -lt 255 ]; then
+    exit $count
+  fi
+  exit 0
+' SIGINT
+
+while true; do
+  sleep 1
+done
+<<<
+
+
+
+Dozorca.sh
+>>>>
+!/bin/bash
+
+# Trap for SIGUSR1 to start CraneA.sh and CraneB.sh
+trap '
+  echo "Received SIGUSR1. Starting Crane1.sh and Crane2.sh."
+  ./CraneA.sh &
+  PIDA=$!
+  ./CraneB.sh &
+  PIDB=$!
+  kill MOVE $PIDA
+' SIGUSR1
+
+trap '
+  echo "Received DONEA. CraneA.sh has moved a file."
+  kill MOVE $PIDB
+' DONEA
+
+trap '
+  echo "Received DONEB. CraneB.sh has moved a file."
+  kill MOVE $PIDA
+' DONEB
+
+trap '
+  echo "Received SIGINT. Stopping CraneA.sh and CraneB.sh."
+  kill $PIDA 
+  resA=$?
+  kill $PIDB
+  resB=$?
+  echo "CraneA.sh przeniosl $resA plikow"
+  echo "CraneB.sh przeniusl $resB plikow"
+  exit 0
+' SIGINT  
+
+
+while true; do
+  sleep 1
+done
+
+wait
+exit 0
+<<<<

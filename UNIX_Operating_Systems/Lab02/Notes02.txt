@@ -1,0 +1,11 @@
+mkdir
+def umask val = 022
+ls -l >> rwolnik/Test/b/katalogi.txt 
+echo $USER
+not sure
+rwolnik@linux-A101-20:~/rwolnik/Test/b$ echo Liczba wierszy: >> informacje.txt 
+rwolnik@linux-A101-20:~/rwolnik/Test/b$ wc -l katalogi.txt >> informacje.txt 
+rwolnik@linux-A101-20:~/rwolnik/Test/b$ echo Liczba slow: >> informacje.txt 
+rwolnik@linux-A101-20:~/rwolnik/Test/b$ wc -w katalogi.txt >> informacje.txt 
+rwolnik@linux-A101-20:~/rwolnik/Test/b$ echo Liczba zankow: >> informacje.txt 
+rwolnik@linux-A101-20:~/rwolnik/Test/b$ wc -m katalogi.txt >> informacje.txt 

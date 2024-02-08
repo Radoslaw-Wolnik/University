@@ -1,0 +1,171 @@
+1.
+a)
+> - Read (r) -
+W przypadku plików: Umożliwia odczyt zawartości pliku. 
+W przypadku katalogów: Umożliwia wyświetlanie listy plików i podkatalogów w katalogu. Na
+> - Write (w) -
+W przypadku plików: Umożliwia modyfikowanie zawartości pliku. 
+W przypadku katalogów: Umożliwia tworzenie, usuwanie i zmienianie nazw plików i podkatalogów w katalogu.
+> - Execute (x) -
+W przypadku plików: Umożliwia wykonanie pliku, jeśli jest to program wykonywalny lub skrypt. 
+W przypadku katalogów: Umożliwia dostęp do zawartości katalogu.
+
+b)
+Aby usunąć plik, użytkownik musi mieć uprawnienia do - Write (w) - w katalogu zawierającym plik. 
+Uprawnienie - Write (w) - w katalogu umożliwia użytkownikom modyfikowanie zawartości katalogu, w tym dodawanie lub usuwanie plików. 
+Jeśli użytkownik ma uprawnienia - Write (w) - w katalogu, ale nie do pliku, nadal może usunąć plik. 
+Jeśli jednak użytkownik ma uprawnienia - Write (w) - w pliku, ale nie w katalogu, nie będzie mógł usunąć pliku.
+
+2.
+
+# Utworz folder A1
+mkdir ~/A1
+cd ~/A1
+
+# Utworz folder A2
+mkdir A2
+cd A2
+
+# usun wszytstkie prawa w obecnym folderze w ktorym sie znajdujesz
+chmod 000 .
+chmod -rwx .
+
+# Sprobuj dodac spowrotem prawa - nie uda sie
+chmod +rwx .
+
+# Cofnij sie do A1 - uda sie
+cd ..
+
+# Sprawdz w jakim obecnie znajdujesz sie folderze
+pwd
+
+
+3.
+
+# Przywroc prawa dla A2
+chmod +rwx ~/A1/A2
+
+# usun prawa dla A1
+chmod 000 ~/A1
+
+# sprobuj przejsc bezposrednio do A1 - nie uda sie
+cd ~/A1/A2
+
+4.
+a) Maska: 022 
+
+umask 022
+touch file
+mkdir directory
+ls- l
+> -rw-r--r-- 1 user user   0 Dec  3 15:00 file
+> drwxr-xr-x 2 user user 4096 Dec  3 15:00 directory
+
+> Dla plików: 
+  Domyślne uprawnienia do plików: 666  
+  Wynikowe uprawnienia: 666−022=644
+  Zatem wynikowe uprawnienia dla nowo utworzonych plików będą wynosić 644. 
+
+> Dla katalogów: 
+  Domyślne uprawnienia dla katalogów: 777 
+  Wynikowe uprawnienia: 777−022=755 
+  Zatem wynikowe uprawnienia dla nowo utworzonych katalogów wyniosą 755.
+
+b) Maska: 666
+umask 666
+touch file
+mkdir directory
+ls -l
+> ---------- 1 user user   0 Dec  3 15:00 file
+> d--x--x--x 2 user user 4096 Dec  3 15:00 directory
+
+> Dla plików: 
+  Domyślne uprawnienia do plików: 666 
+  Wynikowe uprawnienia: 666−666=0
+  Zatem wynikowe uprawnienia dla nowo utworzonych plików będą wynosić 0 (brak uprawnień). 
+
+> Dla katalogów: 
+  Domyślne uprawnienia dla katalogów: 777 
+  Wynikowe uprawnienia: 777−666=111
+  Zatem wynikowe uprawnienia dla nowo utworzonych katalogów będą wynosić 111.
+
+5.
+touch katalogi.txt
+ls -l ~ > katalogi.txt
+
+6.
+echo "Login information:" >> katalogi.txt
+echo "$(whoami)" >> katalogi.txt
+
+7.
+wc katalogi.txt > info.txt
+
+Or
+echo "Number of lines:" $(wc -l < katalogi.txt)" > info.txt
+echo "Number of words:" $(wc -w < katalogi.txt) >> info.txt
+echo "Number of characters:" $(wc -c < katalogi.txt) >> info.txt
+
+8.
+cat -n katalogi.txt > katalogi2.txt
+# skopiuje zawartosc katalogi.txt do katalogi2.txt z numerami linii (-n)
+cat -n katalogi.txt 1> katalogi2.txt
+# - oznacza stdin; 1> oznacza redirection of stdout do pliku katalogi2.txt (once, now, specifies)
+cat -n > katalogi2.txt katalogi.txt
+# error
+cat -n 1> katalogi2.txt katalogi.txt
+# dodje numery lini do katalogi.txt i wpisuje wyjscie (stdout) do katalogi2.txt
+cat > katalogi2.txt -n katalogi.txt
+# sczytuje informacje z katalogi1.txt, numeruje linie i zapisuje do katalogi2.txt
+cat 1> katalogi2.txt -n katalogi.txt
+# tak samo jak poprzednia
+> katalogi2.txt cat -n katalogi.txt
+# numeruje linie w katalogi.txt i wpisuje do katalogi2.txt
+1> katalogi2.txt cat -n katalogi.txt
+# tak samo jak poprzednie
+
+9.
+ls -l | less
+
+10.
+a) ls -l /home | grep "^m" | head -n 3
+b) ls -l /home | grep "^m" | tail -n 3
+
+11.
+./echo "error!!" > blad.txt 2> error.txt
+LUB
+./echo "error!!" > blad.txt 2>&1
+
+12.
+cat NazwaPliku.txt | tr '[:lower:]' '[:upper:]'
+
+13.
+ls -1 | tr '\n' ','
+
+
+14.
+a) sort /etc/passwd
+b) sort < /etc/passwd
+c) cat /etc/passwd | sort
+
+
+15.
+a) 
+  echo "123456789" > liczby.txt
+  : Ten wiersz zapisuje ciąg "123456789" do pliku o nazwie "liczby.txt".
+  exec 3<> liczby.txt
+  : Ten wiersz otwiera deskryptor 3 na zapis i wpis na pliku liczby.txt; Przypisuje deskryptor do pliku
+  read -n 4 <&3
+  : Ten wiersz sczytuje 4 char z deskryptora 3 i zapisuje do var w tym wypadku REPLY
+  echo -n "abc" >&3
+  : Ten wiersz zapisuje "abc" do deskryptora 3 co znaczy ze zapisuje go do pliku w miejscu w ktorym obecnie jest deskryptor 
+  (*po przeczytaniu 4char*)
+  exec 3>&-
+  : Ten wiersz zamyka deskryptor nr 3 tj oddziela go od pliku liczby.txt
+
+b)
+  Użycie numeru deskryptora pliku większego niż 2 nie zmieni z natury danych wyjściowych ani zachowania podanych poleceń jesli zostana zmienione prawidlowo. 
+  Satndardowe numery deskryptorów plików:
+  0 ze standardowym wejściem (stdin),
+  1 standardowym wyjściem (stdout)
+  2 standardowym błędem (stderr). 
+  Deskryptory plików większe niż 2 są dostępne do użytku niestandardowego.

@@ -1,0 +1,20 @@
+find -name "nowy"
+find -name "Dokumenty"
+find -name "[ao]*"
+find -name "s??"
+find -iname "*prog*"
+find -maxdepth 0 -name "*conf*"
+find -maxdepth 0 -empty
+find -mmin 10
+find -mmin +10 & -60
+find -maxdepth 0 -not -name "*bug*"
+grep -e "dawne" wiersz.txt
+grep -i -e "takim" wiersz.txt
+grep -v [0-9] wiersz.txt
+grep -e -o "p*a" | "g*e" wiersz.txt
+grep -e -o "*oo\b" wiersz.txt
+grep -e -o "*a|a|a*" wiersz.txt
+grep -o "{2,4}d*" wiersz.txt
+grep -c "*a*o*" wiersz.txt
+grep -c "a*c" wiersz.txt
+grep -f ^[0-9] .txt

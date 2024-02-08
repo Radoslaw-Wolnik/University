@@ -1,0 +1,170 @@
+1.
+a) cd/dev/pts
+   ls -l
+// crw--w---- 1 rwolnik tty  136, 1 paź 28 10:46 1
+// c--------- 1 root    root   5, 2 paź 28 10:23 ptmx
+// The contents under the directory are pseudo-terminals that allow applications to receive input and 
+// display output
+   cd/dev
+// tutaj pliki terminala rodzaj tty
+// crw--w---- 1 rwolnik tty
+b) nie mozna usunac plikow tty bez odpowiednich uprawnien
+c) tty 
+// /dev/pts/0
+// wyswietla obecna sesje terminala
+   ehco "Sth" >> /dev/pts/0
+// Sth
+// wyswietla output echo on current terminal session
+d) przekierowujac wyjscie z jednego terminala do drugiego wyswietlimy je na drugim terminalu
+e) ls -l >> /dev/pts/0
+// wyswietli output ls -l w obecnej sesji terminala 
+f) zawiesi sie - ctrl+C
+
+2. cd ~/dev
+   ls -l null
+// crw-rw-rw- 1 root root 1, 3 lis 2 20:44 null
+   echo "anything" >> ~/dev/null
+// zostanie usuniete - plik null przechowuje end of line char
+   nano null
+// zostanie usuniete wszystko; na sigmie nie mozna pisac nic
+   cp null ~/Desktop
+// coped file should have size 0
+
+3. dowiązanie twarde hard link
+touch aaa.txt
+echo "text" >> aaa.txt
+ln aaa.txt hardlink.txt
+a) ls -l hardlink.txt
+//-rw-r--r-- 1 userOwner userGroup 100 lis 3 11:00 hardlink.txt
+b) mozna dla pliku nie mozna dla katalogu
+c) 1
+d) zmiana zawartosci jednego nie zmieni zawartos drugiego
+e) zmiana praw dostepu aaa.txt zmieni prawa dostepu hardlink.txt poniewaz dziela ten sam inode
+f) usuniecie linku nie usunie pliku; usuniecie pliku nie usunie linku; będzie broken link error bo nie ma inode
+
+4. dowiązanie miękkie symbolic link
+touch aa.txt
+echo "diff text" >> aa.txt
+ln -s ~/Path/To/File/aa.txt softlink.txt
+aa.txt -l softlink //not sure
+a) lrwxrwxrwx 1 userOwner userGroup 7 lis 3 11:00 softlink.txt -> aa.txt
+   l - symbolic link 7 - size of symbolic link = lenght to path
+b) can be created to directory and to file
+c) 1
+d) zmiana zawartosci jednego zmieni zawartos drugiego
+e) zmiana praw dostepu aa.txt nie zmieni praw dostepu softlink.txt
+f) usuniecie linku nie usunie pliku; usuniecie pliku nie usunie linku; będzie broken link error
+
+5. Potok nazwany Pipe
+mkfifo mypipe
+a) ls -l
+out: prw-rw-r-- 1 userOwner userGroup 0 lis 3 19:54 mypipe
+b) cat < mypipe
+// will wait for output
+   echo "Sth" > mypipe
+// will send that to cat in different terminal
+c) echo "first" > mypipe
+   echo "scnd" > mypipe
+   cat < mypipe
+out: scnd
+     total 0
+     first
+d) cat < mypipe
+// will wait for anything to be send to mypipe
+   echo "first" > mypipe
+// now cat can show "first" and then end task
++) It can be usefull to change directory of output also can store mutiple messages and then write them in one place
+
+6. Gniazdo Socket
+nc -lU ~/path/socket
+a) ls -l socket
+out: srwxrwxr-x 1 userOwner userGroup 0 lis 3 20:49 socket
+// typu socket
+b) nc -lU ~/path/socket > out.txt
+// listens to socket, saves output to out.txt
+   nc -U ~/path/socket < file.txt
+// connects to socket and sends file.txt
+c) tak
++) do przesyłania danych miedzy urzadzeniami
+
+7. 
+   echo $HOME
+out: /home/usrname
+   echo $LANG
+out: en_US.UTF-8
+   echo $PATH
+out: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/snap/bin
+   echo $PWD
+ouot: home/usrname
+   echo $SHELL
+out: /bin/bash
+   echo $TERM
+out: xterm-256color
+   echo $USER
+out: username
+
+8.
+a) test="Ala ma kota"
+b) echo $test
+c) test="Kot ma Ale" 
+   echo $test
+d) env
+   env | grep -i "test"
+   export TEST="Ala miala kota"
+   echo $TEST
+e) unset TEST
+f) env | grep -i "test"        // nie ma
+   declare -p | grep -i "test" // nie ma
+g) export test="alamakota"
+ --- new terminal sesion ---
+   env | grep -i "test"        // nie ma
+   declare -p | grep -i "test" // nie ma
+9.
+a) napis1="Any"
+   napis2="Aything"
+   napisy="$napis1$napis2"
+b) echo ${#napisy}
+c) echo ${napisy:3}
+d) echo ${napisy:3:5}
+e) same
+f) delcare -i a
+   declare -i b
+   let a=7
+   let b=5
+g) declare -i suma roznica iloczyn iloraz
+   let suma=a+b
+   let roznica=a-b
+   let iloczyn=a*b
+   let iloraz=a/b
+h) // declare -a tab
+   tablica=(1 2 4 8 16 32 64 128)
+   echo ${tablica[*]}
+out: 1 2 4 8 16 32 64 128
+i) echo ${tablica[2]}
+j) echo ${#tablica[*]}
+k) binary1=2#1010
+   binary2=2#010
+   decRes = $(($binary1+$binary2))          //12
+   binRes = $(echo "obase=2; $decRes" | bc) //1100
+
+10.
+// run binary file example
+chmod +x example                                               // adds permision to run
+./example                                                      // run example
+alias example = '~/AbsolutePath/example'                       // add alias
+example                                                        // run example
+unalias example                                                // remowes alias
+echo "alias example = '\~/AbsolutePath/example'\" >> ~/.bashrc // pernament alias added to .bashrc file
+source ~/.bashrc                                               // reloades .bashrc file
+example                                                        // run example
+
+//better aproach
+unalias example after del from .bashrc
+mv ~/Pobrane/example bin
+touch .bashrc
+nano .bashrc 
+>>PATH=$HOME/bin:$PATH  // tworzy zmienna srodowiskowa wykonywujaca wszystkie pliki binarne w dir bin
+>>CTRL+x Y
+source ~/.bashrc
+example
+

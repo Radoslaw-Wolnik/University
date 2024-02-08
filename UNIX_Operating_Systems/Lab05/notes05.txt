@@ -1,0 +1,124 @@
+zadanie 1
+ps - wyswietla wszystkie procesy do ktorych uzytkownik ma dostep
+pstree -same ale w postaci drzewa
+jobs - lista zatrzymanych procesow
+top / htop - interaktywne urzadzenie do monitorowania procesow
+
+a) 
+b) 
+c) 
+
+zadanie 2
+
+>>>>
+z2.sh                     
+#!/bin/bash
+while true; do
+  sleep 5s
+  echo "NApis co 5s"
+done
+exit 0
+<<<<
+
+./z2.sh & // uruchomienie w tle
+?) proces niezalezny od konsoli dzialajacy w tle mozna zawsze zabic
+
+a) 
+b) 
+c) 
+d) 
+e) 
+
+zadanie 3
+a) nie bedzie tego procesu
+b) ?
+c) mozna wznowic proces na pierwszym planie
+d) ?
+e) bedzie przekierowywal do innego pliku to co zapisywal
+
+zadnaie 4 
+wspolbierznosc tj wielozadnaiowosc
+
+./skrypt.sh &
+PID
+wait $!
+$?
+
+exit n - zwraca wartosc  n  skrypt
+0 - nie mozna 1 - mozna
+
+dodatnie.sh int int int
+>>>>
+#!/bin/bash
+if [ $# -eq 0 ]; then
+  echo "Zaden argument nie zostal podany"   // powinno sprawdzac tez czy sa 3 argumenty podane
+  exit 0
+fi
+if [ $1 -le 0 ]; then
+  echo "pierwszy arg mniejszy od zera lub rowny"
+  exit 0
+fi
+if [ $2 -le 0 ]; then
+  echo "drugi"
+  exit 0
+fi
+if [ $3 -le 0 ]; then
+  echo "trzeci"
+  exit 0
+fi
+
+echo "all good"
+exit 1
+<<<<
+
+trojkat.sh int int int
+>>>>
+#!/bin/bash
+
+# uruchom dodatnie.sh
+res = ./dodatnie.sh $1 $2 $3 &
+if [ $res -eq 0 ]; then
+  echo "bok ujemny lub 0"
+  exit 0
+fi
+
+# sprawdz czy mozna zrobic trojkat z bokow a, b, c
+
+if [ $b + $c < $a ]; then
+  echo "dwa dodane boki nie moga byc mnienjsze niz ten trzeci"
+  echo "za duzy a"
+  exit 0
+fi
+if [ $a + $c < $b ]; then
+  echo "dwa dodane boki nie moga byc mnienjsze niz ten trzeci"
+  echo "za duzy b"
+  exit 0
+fi
+if [ $a + $b < $c ]; then
+  echo "dwa dodane boki nie moga byc mnienjsze niz ten trzeci"
+  echo "za duzy c"
+  exit 0
+fi
+
+ehco "all triangulated"
+exit 1
+<<<<
+zadanie 5
+trzy skrypty
+
+zadanie 6
+zastosowania roznego rodzaju sygnalow
+w skrypcie mozna zmienic zastosowania sygnalu poprzez wpisanie w skrypcie 
+trap
+i wtedy eg ejsli wcisniemy ctrl-C to mozemy zmienic to ze nie zostanie zabity proces tylo cos innego sie stanie
+
+przesylanie sygnalu do programu:
+kill -s SIGUSR2 22222
+
+zadanie 7
+taki wieksze zadanie domowe stworzyc symulator 
+jak ktos zrobi to bedzie dobrze przygotowany na kolokwioum
+- wieksze zadanko, jesli ktos umie zrobic to spoko kolokwium napisze bez problemu
+
+Lab1 -Lab5 Kolokwium 
+mozna korzystac z notatek i z stronki lmielewczyk jego

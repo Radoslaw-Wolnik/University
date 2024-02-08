@@ -1,0 +1,43 @@
+1.
+find -name "new"
+2. 
+find -name "Dokumenty"
+3.
+find -name "[o,a]*"
+4.
+find -name "s??"
+5.
+find -iname "*prog*"
+6.
+find -maxdepth 0 -name "*conf*"
+7.
+find -maxdepth 0 -empty
+8.
+find -cmin 10
+9.
+find -cmin -60 -cmin +10
+10.
+find -maxdepth 0 -not -name "*bug*"
+11.
+grep -e "dawne" ~/Path/wiersz.txt // alias path='~/Downloads/wiersz.txt' doesn't work :(
+12.
+grep -i "takim" ~/Path/wiersz.txt 
+13.
+grep -v [0-9] wiersz.txt
+14.
+grep -w "p[a-zA-z]*a" wiersz.txt
+egrep -w "p[a-zA-z]*a|g[a-zA-z]*e" wiersz.txt
+grep -E "\b(p[a-zA-z]*a|g[a-zA-z]*e)\b" wiersz.txt
+15.
+egrep -w "[a-zA-Z]*oo*[a-zA-Z]*" wiersz.txt
+16.
+egrep -i "\b([^a ]*a[^a ]){3}\b" wiersz.txt
+17.
+egrep "\b[^d ]{2,4}d[^d ]*" wiersz.txt
+egrep "\b[a-zA-Z]{2,4}d[a-zA-Z]*\b" wiersz.txt
+18.
+egrep -c "\b[a-zA-Z]*a[^a ]*o\b" wiersz.txt
+19.
+egrep -ic "\ba[a-zA-Z]*o\b" wiersz.txt
+20.
+find -name "*.txt" | grep "^[0-9]"

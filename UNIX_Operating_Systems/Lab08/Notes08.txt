@@ -1,0 +1,388 @@
+// Tup tup tup
+// Wyniki kolokwium przed swietami zeby wiedziec co i jak
+// udostepnione zadanie Lab09 zad4 takie wieksze żeby nie robic tuz przed kolokwium 
+// - symulator sygnalizacji swietlnej 
+// - proces glowny tworzy dwa procesy potomne - droga a i droga b
+// drogi a i b sie krzyzuja
+// drogi a i b maja dwa watki ap ac bc bp - jeden symuluje swiatla ddrugi pas tuchu (c i p)
+// proces glwony twozry losowo samochody i je wysyla chyba
+
+// zmienne globalne - flagi
+// procesy maja swoje zasoby - jesli zmieniaja globalna to zmieniaja swoja globalna? 
+// zmiana zasobow w watkach jest jakas dziwna
+// konczymy jak jest kraksa
+
+// check exercises: 3, 4, 5
+
+// C libs and func -------------------------------------------------------------------------
+
+    unistd.h
+        fork - tworzy proces. wartości zwracane
+            -1 - jeżeli wystąpił błąd (nie udało się utworzyć procesu).
+            0 - jeżeli proces został utworzony (stał się dzieckiem procesu nadrzędnego).
+            PID procesu potomnego (większy niż 0) - jeżeli proces utworzył proces potomny.
+        getpid - zwraca identyfikator bieżącego procesu.
+        getppid - zwraca identyfikator nadrzędnego procesu.
+        sleep - zawiesza wykonanie procesu na pewien czas (sekundy).
+        usleep - zawiesza wykonanie procesu na pewien czas (milisekundy).
+    stdlib.h
+        exit - kończy proces.
+    sys/wait.h
+        wait - czeka na zakończenie lub zatrzymanie procesów potomnych.
+        waitpid - czeka na zakończenie lub zatrzymanie procesu potomnego.
+    signal.h
+        signal - obsługuje sygnał dla procesu.
+        raise - wysyła sygnał do bieżącego procesu.
+        kill - wysyła sygnał do procesu o podanym PID.
+        pthread_kill - wysyła sygnał do wątku.
+        sigemptyset - inicjalizuje zbiór sygnałów.
+        sigaddset - dodaje sygnał do zbioru.
+        sigwait - czeka na sygnał.
+    pthread.h
+        pthread_create - tworzy wątek.
+        pthread_join - czeka na zakończenie wątku.
+        pthread_self - zwraca id wątku.
+        pthread_exit - kończy wątek.
+
+
+Important !!! To have random numbers one have to first create seed !!!!
+srand((unsigned int)time(NULL));
+// --------------------------------------------------------------------------------------------
+
+------------------------------- Zadanie 1. ------------------------------------
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+
+int main() {
+  printf("pierwszy napis\n");
+  fork();
+  wait(NULL);
+  printf("drugi napis\n");
+  fork();
+  wait(NULL);
+  printf("trzeci napis\n");
+  return 0;
+}
+Kolejnosc wykonyania:
+:  > write "pierwszy napis"
+:  > fork - 2 procesy c and p; p waits for all children to finish to continue c -child p -parent
+c: > write "drugi napis"
+c: > fork c1 c; c waits for all children to finish to continue c1 -child c -parent
+c1:> write "third napis"
+c: > write "third napis"
+p: > write "drugi napis"
+p: > fork p1 p; p waits for all children to finish to continue p1 -child p -parent
+p1:> write "third napis"
+p: > write "third napis"
+
+Wynik dzialania programu: 
+> pierwszy napis
+> drugi napis
+> trzeci napis
+> trzeci napis
+> drugi napis
+> trzeci napis
+> trzeci napis
+
+jesli usuniemy wait(NULL); po fork(); to oba procesy sie wykonuja na raz
+Kolejnosc wykonyania:
+:  > write "pierwszy napis"
+:  > fork - 2 procesy p doesnt wait c -child p -parent
+p: > write "drugi napis"
+c: > write "drugi napis"
+p: > fork p1 p; p1 waits for p1 to finish
+c: > fork c1 c; c waits for c1 to finish
+p1:> write "third napis"
+p: > write "third napis"
+c1:> write "third napis"
+c: > write "third napis"
+watki dzialaja wtedy "rownolegle" - tak naprawde szybko przelaczamy sie miedzy jednym a drugim
+
+Wynik dzialania programu jesli usuniemy pierwszy wait(NULL):
+> pierwszy napis
+> drugi napis
+> drugi napis
+> trzeci napis
+> trzeci napis
+> trzeci napis
+> trzeci napis
+
+Wynik dzialania programu jesli usuniemy drugi wait(NULL):
+> pierwszy napis
+> drugi napis
+> trzeci napis
+> trzeci napis
+> drugi napis
+> trzeci napis
+> trzeci napis
+
+Wynik dzialania programu jesli usuniemy oba wait(NULL):
+> pierwszy napis
+> drugi napis
+> drugi napis
+> trzeci napis
+> trzeci napis
+> trzeci napis
+> trzeci napis
+
+
+---------------------------------- Zadanie 2. -------------------------------------
+SIGNAL: SIGINT: "Jestem niesmiertelny"
+SIGNAL: SIGHUP: - stop reacting on SIGINT -
+
+> touch scnd.c
+> gcc scnd.c -o scnd
+> ./scnd &
+> $!
+> kill -SIGINT $!
+: "Jestem niesmiertelny!"
+> kill -SIGHUP $!
+> kill _SIGINT $!
+: nothing
+> kill $!
+
+--- Scnd.c ---                                                              
+#include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
+#include <stdbool.h>
+
+bool flag = 1;
+
+void handleSignalINT(int s) {
+  if (flag){
+    fprintf(stdout, "Jestem niesmiertelny!\n");
+    // Different way of writing to terminal - using descriptor 1 : stdout
+    dprintf(1, "Descriptor 1\n");
+    // and this doesnt work idk why :(
+    //fprintf(STDOUT_FILENO, "fileno\n", 5);
+  }
+}
+
+void handleSignalHUP(int s){
+  flag = 0;
+}
+
+int main() {
+  signal(SIGINT, handleSignalINT);
+  signal(SIGHUP, handleSignalHUP);
+
+  while(1){
+    sleep(1);
+  }
+
+  return 0;
+}
+--- end ----
+
+----------------------------- Zadanie 3. ----------------------------
+
+
+// parent : parent : parent : parent : parent : parent : parent : 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    pid_t myID = getpid();
+    const char *child = "./Z3kiddo";
+
+    pid_t kiddoID = fork();
+
+    if(kiddoID == -1){
+      printf("something went wrong");
+    }
+    
+    if(kiddoID == 0){
+      printf("Starting kiddo");
+      execlp(child, child,(char *)NULL);
+    }
+    else{
+        int status;
+        pid_t KiddoFinish = waitpid(kiddoID, &status, 0);
+        //pid_t waitpid(pid_t kiddoID, int *status, int options);
+
+        printf("Kiddo finished work");
+        printf("My ID: %d \n", myID);
+
+        return 0;
+    }
+    return 1;
+}
+
+
+// kiddo : kiddo : kiddo : kiddo : kiddo : kiddo : kiddo : kiddo : 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+// getpid - zwraca identyfikator biezaego procesu.
+// getppid - zwraca identyfikator nadrzednego procesu.
+// sleep - zawiesza wykonanie procesu na pewien czas
+
+int main() {
+    int randNum = 21;
+    pid_t myID = getpid();
+    pid_t parentID = getppid();
+    
+    printf("My ID: %d, \n", myID);
+    printf("ID of my parent: %d, \n", parentID);
+
+    while((randNum % 50) != 0){
+        // rand zakres 1-50
+        randNum = rand() % 50 + 1;
+        printf("Current random number: %d\n", randNum);
+        sleep(1);
+    }
+
+    return 0;
+}
+
+
+
+------------------------------- Zadanie 4. ----------------------
+
+// parent : parent : parent : parent : parent : parent : parent : parent : 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+
+int main() {
+    pid_t myID = getpid();
+    const char *childUno = "./Z3kidUno";
+    const char *childDos = "./Z3kidDos";
+    
+    printf("Im the parent\n");
+    printf("Starting kiddos\n");
+
+    pid_t UnoID = fork();
+    if (UnoID == -1){
+        printf("Sth wrong first fork\n");
+        return 1;
+    }
+    if (UnoID == 0){
+        execlp(childUno, childUno, (char *)NULL);
+    }
+    else{
+        pid_t DosID = fork();
+        if (DosID == -1){
+            printf("Sth wrong scnd fork\n");
+            return 1;
+        }
+        if (DosID == 0){
+            execlp(childDos, childDos, (char *)NULL);
+        }
+        else{
+            char *UnoFlag = "y";
+            char *DosFlag = "y";
+            while(UnoFlag == "y" || DosFlag == "y"){                
+            // rand zakres 1-50                             
+            int randNum = rand() % 50 + 1;
+            printf("Current random number: %d\n", randNum);
+            if (randNum <= 10){
+                UnoFlag = "n";
+                kill(SIGTERM, UnoID);
+            }
+            if (randNum >= 40){
+                DosFlag = "n";
+                kill(SIGTERM, DosID);
+            }
+            sleep(1);
+            }
+            printf("Both kidds are dead\n");
+        }
+        return 0;
+    }
+    printf("Here is the aftermatch\n");
+}
+
+----------------------------------------------------------------------------
+
+// kiddo Uno : kiddo Uno : kiddo Uno : kiddo Uno : kiddo Uno : kiddo Uno : kiddo Uno : 
+// Z4kidUno
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+int main() {
+    pid_t myID = getpid();
+    pid_t parentID = getppid();
+    while(1){
+        
+        printf("Im kiddo Uno\n");
+        printf("My ID: %d \n", myID);
+        printf("ID of my parent: %d \n", parentID);
+        sleep(1);
+    }
+
+    return 0;
+}
+
+
+// kiddo Dos : kiddo Dos : kiddo Dos : kiddo Dos : kiddo Dos : kiddo Dos : kiddo Dos : 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+int main() {
+    pid_t myID = getpid();
+    pid_t parentID = getppid();
+    while(1){
+        
+        printf("Im kiddo Dos\n");
+        printf("My ID: %d \n", myID);
+        printf("ID of my parent: %d \n", parentID);
+        sleep(1);
+    }
+
+    return 0;
+}
+
+
+
+------------------------------------ Zadanie 5. -------------------------------------
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <time.h>
+
+// pthread_create - tworzy watek.
+// pthread_join - czeka na zakonczenie watku.
+// pthread_self - zwraca id watku.
+// pthread_exit - konczy watek
+
+void *myThread(void *arg) {
+    int randNum = 21;
+  
+    while((randNum % 5) != 0){
+        // rand zakres 1-50
+        pthread_t tid = pthread_self();
+        randNum = rand() % 50 + 1;
+        printf("My threadID: %lu \n", tid);
+        printf("Current random number: %d\n", randNum);
+        sleep(1);
+    }
+}
+
+
+int main() {
+    // zmienna typu Id of thread
+    pthread_t threadID;
+    // tworzy thread z funkcji myThread i przypisuje ID do threadID
+    pthread_create(&threadID, NULL, myThread, NULL);
+    // czeka na zakoncznie threadID
+    pthread_join(threadID, NULL);
+
+return 0;
+}

@@ -1,0 +1,393 @@
+------------------------------ 1 -------------------------------
+version 1)
+
+touch one.sh
+nano one.sh
+>>>
+#!/bin/bash
+declare -i sum
+sum=$1+$2
+result=$(($1+$2+$3))
+echo "dodane dwie: $sum"
+echo "dodane trzy: $result"
+exit 0
+<<<
+chmod u+x one.sh
+first.sh 1 2 3
+
+v2)
+touch first.sh
+nano first.sh
+>>>
+#!/bin/bash
+read -p "Podaj liczbe calkowita a: " a
+read -p "Podaj liczbe calkowita b: " b
+read -p "Podaj liczbe calkowita c: " c
+sum=$((a + b + c))
+echo "Suma $a, $b, i $c to: $sum"
+exit 0
+<<<
+chmod u+x first.sh
+first.sh
+< 2
+< 3
+< 4
+> suma: 9
+
+------------------------------ 2 -------------------------------
+touch two.sh
+chmod u+x two.sh
+nano two.sh
+>>>
+#!/bin/bash
+
+if [[ ${#1} -gt ${#2} ]]
+then
+echo "napis '$1' jest dluzszy niz napis '$2'" 
+elif [[ ${#1} -eq ${#2} ]]
+then
+echo "napisy sa rownej dlugosci"
+else
+echo "napis '$2' jest dluzszy niz napis '$1'" 
+fi
+
+if [[ "$1" < "$2" ]]
+then
+echo "$1 napis jest wczesniej w alfabecie niz $2"
+elif [[ "$1" > "$2" ]]
+then
+echo "$2 napis jest wczesniej w alfabecie niz $1"
+else
+echo "napisy sa takie same"
+fi
+
+exit 0
+<<<
+
+------------------------------ 3 -------------------------------
+touch three.sh
+chmod u+x three.sh
+nanno three.sh
+>>>
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  echo "Wywolujac program napisz: $0 <file_path>"
+  exit 1
+fi
+
+path="$1"
+
+if [ -e "$path" ]; then
+  echo "informacje ls -l"
+  ls -l "$path"
+else
+  echo "zla scierzka nie ma pliku/folderu"
+  exit 2
+fi
+
+exit 0
+<<<
+
+./three.sh ~/Desktop/file.txt
+./three.sh ~/Desktop
+
+------------------------------ 4 -------------------------------
+
+#!/bin/bash
+dzisiaj=$(date +%Y-%m-%d)
+mkdir "$dzisiaj"
+
+find ~ -maxdepth 3 -type f -newermt "$dzisiaj" ! -newermt "$dzisiaj+1 day" -exec cp {} "$dzisiaj" \;
+echo "pliki utworzone dzisiaj skopiowane do: $dzisiaj"
+exit 0
+
+------------------------------ 5 -------------------------------
+five.sh
+>>>
+#!/bin/bash
+
+last_index=$#
+odwrotne=()
+echo "Podana Array argumentow: $*"
+
+for (( i=$last_index; i>0; i-- )); do
+  odwrotne+=(${!i})
+done
+echo "Array argumentow w odwrotnej kolejnosci: ${odwrotne[@]}"
+
+exit 0
+<<<
+./five.sh 1 2 3 4 5 6
+
+
+------------------------------ 6 -------------------------------
+six.sh
+>>>
+#!/bin/bash
+
+len=${#1}
+rev=""
+idx=$(($len-1))
+echo "Podany string $1"
+
+while [ $idx -ge 0 ]
+do
+  rev="${rev}${1:$idx:1}"
+  idx=$(($idx-1))
+done
+
+echo "Odwrocony string: $rev"
+
+exit 0
+<<<
+./six.sh "Ala ma kota"
+
+------------------------------ 7 -------------------------------
+seven.sh
+>>>
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  echo "Zaden argument nie zostal podany"
+  echo "do better: $0 <filepath>"
+  exit 1
+fi 
+
+path="$1"
+
+if [ ! -e "$path" ]; then
+  echo "Error: Plik nie istnieje: $path"
+  exit 2
+fi 
+
+# Get the file extension
+ext="${path##*.}"
+
+case "$ext" in
+  "txt")
+    nano "$path" &
+    ;;
+  "sh")
+    bash "$path"
+    ;;
+  *)   
+    echo "Nieznany typ pliku: $ext"
+    ;;
+esac  
+
+exit 0
+<<<
+./seven.sh <path>
+./seven.sh ~/Bin/LAB01/grass.sh
+./seven.sh ~/Bin/LAB01/text.txt
+
+------------------------------ 8 -------------------------------
+
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    username=$(whoami)
+fi
+username="$1"
+# alternatywnie $(whoami) gives a name of current user
+
+home_directory=$(getent passwd "$username" | cut -d: -f6)
+
+# Check if the user exists
+if [ -z "$home_directory" ]; then
+    echo "Error: User not found: $username"
+    exit 1
+fi
+
+# Display information about the terminal file
+echo "Information about terminal file for user: $username"
+echo "Home Directory: $home_directory"
+echo "Terminal File: $home_directory/.bashrc" 
+exit 0
+
+------------------------------ 9 -------------------------------
+
+#!/bin/bash
+ 
+pod="$1"
+echo "Podslowo: $pod"
+count=$(find ~ -maxdepth 1 -type f -name "*$pod*" -o -type d -name "*$pod*" | wc -l)
+
+echo "Ilosc plikow i folderow w pliku domowym zawierajace podlowo: '$pod'to: $count"
+
+exit 0
+
+
+------------------------------ 10 -------------------------------
+>>>
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  echo "Nei podano zadnych argumentow"
+  exit 1
+fi
+
+av=$(echo "$*" | tr ' ' '\n' | awk '{total += $1 } END { print total / NR }' | bc)
+
+echo "Srednia: $av"
+exit 0
+<<<
+
+./ten.sh 10 8 5 5 1 1
+>Srednia: 5
+./ten.sh 10 7
+>Srednia: 8.5
+
+
+------------------------------ 11 -------------------------------
+
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "do: $0 <folder_path>"
+    exit 1
+fi
+
+path="$1"
+
+if [ ! -d "$path" ]; then
+    echo "Error: Nie ma folderu: $path"
+    exit 2
+fi
+
+du -h "$path"
+total=$(du -sh "$path" | awk 'print{$1}')
+#wypisuje tylko first line
+total=$(du -sh "$path" | cut -f1)
+#wycina tylko first field
+echo "$total"
+exit 0
+
+
+--- diff aproach --- 
+
+#!/bin/bash
+
+calculate_size() {
+  local path="$1"
+  local size=0
+
+  if [ -f "$path" ]; then
+    # If it's a regular file, get its size using stat
+    size=$(stat -c "%s" "$path" 2>/dev/null || stat -f "%z" "$path" 2>/dev/null)
+  elif [ -d "$path" ]; then
+    # If it's a directory, calculate the total size of its contents recursively
+    local sub_items=$(ls -A "$path")
+
+    for item in $sub_items; do
+      calculate_size "$path/$item"
+      size=$((size + $?))  # $? result from last instruction
+    done
+  fi
+  echo "$size"
+}
+
+ourpath="$1"
+if [ ! -d "$ourpath" ]; then
+    echo "Error: Nie ma folderu: $ourpath"
+    exit 2
+fi
+
+result=$(calculate_size "$ourpath")
+
+echo "Total size of $ourpath: $result bytes"
+exit 0
+
+
+------------------------------ 12 -------------------------------
+
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <folder_path>"
+    exit 1
+fi
+folder_path="$1"
+
+if [ ! -d "$folder_path" ]; then
+    echo "Error: Folder not found: $folder_path"
+    exit 1
+fi
+
+
+current_user=$(whoami)
+current_date=$(date +"%Y-%m-%d")
+
+backup_folder="$HOME/backups"
+mkdir -p "$backup_folder"
+
+
+archive_filename="${current_user}_backup_data_${current_date}"
+find "$folder_path" -type f -name "*.txt" -exec tar -cvzf "$backup_folder/$archive_filename.tar.gz" {} +
+
+echo "Archive created: $backup_folder/$archive_filename.tar.gz"
+exit 0
+
+--------------------------------- 13 <3 ------------------------------
+--- server ---
+#!/bin/bash
+fifo_path="myfifo"
+if [ ! -p "$fifo_path" ]; then
+    mkfifo "$fifo_path"
+fi
+
+# Server functionality in an infinite loop
+while true; do
+    read -r word < "$fifo_path"
+    if [ -z "$word" ]; then
+        echo "Client closed. Exiting server."
+        break
+    fi
+
+    vowel_count=$(echo "$word" | grep -o -i '[aeiou]' | wc -l)
+    echo "Word '$word' has $vowel_count vowels." > "$fifo_path"
+done
+
+rm -f "$fifo_path"
+exit 0
+
+--- client ---
+
+#!/bin/bash
+fifo_path="myfifo"
+if [ ! -p "$fifo_path" ]; then
+    echo "Error: Server not running. Start the server script first."
+    exit 1
+fi
+
+read -p "Enter a word: " user_input
+echo "$user_input" > "$fifo_path"
+read -r length_calculation < "$fifo_path"
+
+echo "$length_calculation"
+echo "" > "$fifo_path"
+
+
+------------------------------ 14 -------------------------------
+#!/bin/bash
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <value>"
+    exit 1
+fi
+export test="$1"
+echo "Variable 'test' set to: $test"
+
+--- in subshell
+( . Zadanie14.sh "ala ma kota" )
+echo "Variable 'test' in the current shell: $test"
+
+--- in main shell
+source ./Zadanie14.sh "Totoloto"
+echo "Variable 'test' in main shell: $test"
+
+env
+env | grep -i "test"
+# remember to use source
+# or run in current shell . script.sh
+

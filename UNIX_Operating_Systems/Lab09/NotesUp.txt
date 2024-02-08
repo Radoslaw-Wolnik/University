@@ -1,0 +1,534 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <time.h>
+#include <unistd.h> // includes sleep()
+
+#include <string.h>
+#include <math.h> // gcc Zadanie3.c -o za3 -lm 
+
+#include <sys/wait.h> // waits for other program to 
+#include <signal.h> // signals send to programms
+
+:: ------------------------- Mutex Usage --------------------------- ::
+
+#include <stdio.h>
+#include <pthread.h>
+
+int main() {
+    pthread_mutex_t myMutex = PTHREAD_MUTEX_INITIALIZER;
+
+    // Use the mutex...
+
+    // Destroy the mutex when it's no longer needed
+    if (pthread_mutex_destroy(&myMutex) != 0) {
+        perror("Failed to destroy mutex");
+        return 1;
+    }
+
+    return 0;
+}
+
+
+:: ------------------------- Semaphore Usage --------------------------- ::
+
+#include <stdio.h>
+#include <semaphore.h>
+
+int main() {
+    sem_t mySemaphore;
+
+    // Initialize the semaphore
+    if (sem_init(&mySemaphore, 0, 1) != 0) {
+        perror("Failed to initialize semaphore");
+        return 1;
+    }
+
+    // Use the semaphore...
+
+    // Destroy the semaphore when it's no longer needed
+    if (sem_destroy(&mySemaphore) != 0) {
+        perror("Failed to destroy semaphore");
+        return 1;
+    }
+
+    return 0;
+}
+
+
+:: ------------------------- Barrier Usage --------------------------- ::
+
+#include <stdio.h>
+#include <pthread.h>
+
+#define NUM_THREADS 3
+
+int main() {
+    pthread_barrier_t myBarrier;
+
+    // Initialize the barrier
+    if (pthread_barrier_init(&myBarrier, NULL, NUM_THREADS) != 0) {
+        perror("Failed to initialize barrier");
+        return 1;
+    }
+
+    // Use the barrier...
+
+    // Destroy the barrier when it's no longer needed
+    if (pthread_barrier_destroy(&myBarrier) != 0) {
+        perror("Failed to destroy barrier");
+        return 1;
+    }
+
+    return 0;
+}
+
+:: ------------------------- File Usage Open --------------------------- ::
+
+#include <stdio.h>
+
+int main() {
+    // Define the filename as a string variable
+    const char* filename = "example.txt";
+
+    // Open the file for reading
+    FILE* file = fopen(filename, "r");
+
+    if (file == NULL) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    // File operations...
+
+    // Close the file when done
+    fclose(file);
+
+    return 0;
+}
+
+:: ------------------------- File Usage Write --------------------------- ::
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+
+    // Uzytkownik wpisuje ile liczb nalezy pobrac
+    printf("Wpisz ile liczb chcesz podac (int): ");
+    scanf("%d", &n);
+
+    // Sprawdz czy n jest poprawne
+    if (n <= 0) {
+        fprintf(stderr, "Niepoprawna liczba, nalezy podac liczbe dodatnia.\n");
+        return 1;
+    }
+
+    FILE *negatywnyF, *pozytywnyF;
+
+    // Otworz lub utworz pliki
+    negatywnyF = fopen("ujemne.txt", "w");
+    pozytywnyF = fopen("dodatnie.txt", "w");
+
+    if (negatywnyF == NULL || pozytywnyF == NULL) {
+        fprintf(stderr, "Niepoprawne otworzenie plikow\n");
+        return 1;
+    }
+
+    int number;
+    for (int i = 0; i < n; i++) {
+        printf("Podaj liczbe calkowita #%d: ", i + 1);
+        scanf("%d", &number);
+
+        if (number == 0) {
+            fprintf(stderr, "Error: Nie mozna podawac Zera, podaj dowolna inna calkowita liczbe.\n");
+            fclose(negatywnyF);
+            fclose(pozytywnyF);
+            return 1; // Return an error code
+        }
+
+        if (number < 0) {
+            fprintf(negatywnyF, "%d\n", number);
+        } else {
+            fprintf(pozytywnyF, "%d\n", number);
+        }
+    }
+
+    fclose(negatywnyF);
+    fclose(pozytywnyF);
+
+    printf("Liczbby zostaly zapisane pomyslnie.\n");
+
+    return 0;
+}
+
+
+
+:: ------------------------- File Usage Read One --------------------------- ::
+
+
+int main() {
+
+    FILE *file;
+    int empAmount;
+    file = fopen("UnoNumero.txt", "r");
+
+    if (file == NULL) {
+        fprintf(stderr, "Nie udalo sie otworzysc pliku\n");
+        return 1;
+    }
+
+    if (fscanf(file, "%d", &empAmount) != 1) {
+        fprintf(stderr, "Nie udalo sie odczytac danych z pliku\n");
+        fclose(file);
+        return 10;
+    }
+    if (empAmount <= 0){
+        fprintf(stderr, "Nieprawidlowa ilosc pracownikow\n");
+        return 20;
+    }
+    fclose(file);
+
+}
+
+:: ------------------------- File Usage Read Twice --------------------------- ::
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <string.h>
+#include <math.h> // gcc Zadanie3.c -o za3 -lm 
+#include <time.h>
+#include <unistd.h>
+
+
+void *thRozklad(void *arg) {
+    int number = *(int *)arg;
+    int beginning = number;
+    // ... rest of the thread
+
+}
+
+int threadNum = 0;
+int main() {
+    // open file and read to determine the ammount of numbers
+    FILE *file = fopen("threeNumbers.txt", "r");
+    
+    if (file == NULL) {
+        fprintf(stderr, "Unable to open the file.\n");
+        return 1;
+    }
+
+    int currentNumber = 0;
+    // Read each number from the file
+    while (fscanf(file, "%d", &currentNumber) == 1) {
+        threadNum += 1;
+    }
+    printf("Main: Number of threads: %d\n", threadNum);
+
+    // Reset the file position indicator to the beginning
+    fseek(file, 0, SEEK_SET);
+    
+    pthread_t threads[threadNum];
+    int numbers[threadNum];
+    int i = 0;
+    while (fscanf(file, "%d", &currentNumber) == 1) {
+        numbers[i] = currentNumber;
+        i++;
+    }
+
+    fclose(file);
+
+    // Create threads
+    for (int i = 0; i < threadNum; ++i) {
+        if (pthread_create(&threads[i], NULL, thRozklad, (void *)&numbers[i]) != 0) {
+            fprintf(stderr, "Error creating thread %d.\n", i);
+            return EXIT_FAILURE;
+        }
+    }
+
+    // Wait for threads to finish
+    for (int i = 0; i < threadNum; ++i) {
+        if (pthread_join(threads[i], NULL) != 0) {
+            fprintf(stderr, "Error joining thread %d.\n", i);
+            return EXIT_FAILURE;
+        }
+    }
+
+
+}
+
+
+
+:: ------------------------- Signals Usage --------------------------- ::
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <time.h>
+#include <stdbool.h>
+#include <sys/wait.h>
+#include <signal.h>
+// pthread_create - tworzy watek.
+// pthread_join - czeka na zakonczenie watku.
+// pthread_self - zwraca id watku.
+// pthread_exit - konczy watek
+
+pid_t UnoID;
+pid_t DosID;
+bool flag = 1;
+bool kidsAlive = 0;
+void handleSignalINT(int s) {
+    // if there is a crash then child sends signal -SIGINT to parent
+    flag = 0;
+    printf("Crahs\n");
+}
+
+void handleSIGUSR1(int s) {
+    // send by kiddoUno if it changed the light
+    // pass it to kiddoDos
+    if(kidsAlive){
+        kill(DosID, SIGUSR2);
+    }
+    // there is boolan kidsAlive becouse theoreticly sb could send SIGUSR1/SIGUSR2 to main programm without it having kids yet
+}
+
+void handleSIGUSR2(int s) {
+    // send by kiddoDos if it changed the light
+    // pass it to kiddoUno
+    if(kidsAlive){
+        kill(UnoID, SIGUSR2);
+    }
+}
+
+
+int main() {
+    pid_t myID = getpid();
+    const char *childUno = "./kiddoUno";
+    const char *childDos = "./kiddoDos";
+    // Set the seed for rand() using the current time
+    srand((unsigned int)time(NULL));
+    signal(SIGINT, handleSignalINT);
+    signal(SIGUSR1, handleSIGUSR1);
+    signal(SIGUSR2, handleSIGUSR2);
+    
+
+    const char *childMono = "./kiddoUno";
+    pid_t InvokedKids[2];
+    char *args[] = {NULL};
+    // we use same child process, invoke it twice and exit to main body where we can do things on the invoked processes
+    for (int i = 0; i < 2; ++i) {
+        //pid_t pid = fork();
+        InvokedKids[i] = fork();
+        pid_t pid = InvokedKids[i];
+        if (pid == -1) {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+
+        if (pid == 0) {
+            // This is the child process
+            execv(childMono, args);
+            exit(EXIT_SUCCESS);
+        }
+    }
+
+    UnoID = InvokedKids[0];
+    DosID = InvokedKids[1];
+    kill(UnoID, SIGUSR2);
+    kill(UnoID, SIGUSR2);
+    kidsAlive = 1;
+
+    printf("%d : %d\n", InvokedKids[0], InvokedKids[1]);
+    printf("%d : %d\n", UnoID, DosID);
+
+
+    printf("The main body of program -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-\n");
+    // main body : 
+    int i = 0;
+    while(flag){
+        // rand zakres 1-2
+        int randNum = rand() % 2 + 1;
+        i += 1;
+        printf("Curr iteration of rand int: %d\n", i);
+        printf("parent: curr rand int: %d\n", randNum);
+        if (randNum == 1){
+            kill(UnoID, SIGUSR1);
+        }
+        if (randNum == 2){
+            kill(DosID, SIGUSR1);
+        }
+        fflush(stdout);
+        sleep(10);
+    }
+
+    // Ending alive children
+    // as they run infinitely
+    kill(UnoID, SIGTERM);
+    kill(DosID, SIGTERM);
+    
+    return 0;
+}
+
+
+
+// kiddo Mono : kiddo Uno : kiddo Mono : kiddo Uno : kiddo Mono : kiddo Uno : kiddo Mono : 
+
+
+// exec name: kiddoUno
+// SIGUSR1 send to parentID - changed light - another kid can change light
+// SIGINT to parent if crash occured
+// SIGUSR1 - create new car
+// SIGUSR2 - change canChange light - another kid changed lioght and parrent communicates that to us
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <time.h>
+#include <stdbool.h>
+#include <signal.h>
+
+bool light = 0;
+bool canChange = 1; // in second child set as 1
+int road[50];
+const int roadLen = sizeof(road) / sizeof(road[0]);
+
+void *lightThread(void *arg) {
+    // thread symuliting trafic Lights 
+    // every 10s lights change state
+    // 0 : false : red light
+    // 1 : true : green light
+    // either light can be passed in incantation of function or be a global var
+    pid_t parentID = getppid();
+    while(1){
+        // if changed state send signal to parent that changed state
+        // parent will pass it to the second child
+        // child will only change state if it got signal that another child changed state
+        // one child begins with red light, one begins with green light
+        if(canChange){
+            light = !light;
+            //kill(parentID, SIGUSR1);
+            canChange = 1;
+        }
+        //thread.moveCars zalezy od light
+        sleep(2);
+    }
+
+}
+
+
+int moveCars(){
+    // function gets list of int[50]
+    // if road[i] = 0 : puste pole
+    // if road[i] != 0 : there is car here
+    // cars move with speed 1 - 10
+    // number tells how much car moves forward ;; 1 : 1 cell forward ;; 2 : 2 cells forward etc
+
+    if(road[0] != 0){
+        road[0] = 0;
+    }
+    int prevCar = -100;
+    // move the rest of cars
+    for(int i = 1; i < roadLen; i++){
+        if(road[i] != 0){
+
+            int newPlace = i - 1;
+            // sprawdzenie czy "przeskoczylo" inne auto - kraksa
+            if(newPlace < prevCar){
+                return 1;
+            }
+            // wyjechalo
+            else if(newPlace < 0){
+                road[i] = 0;
+            }
+            // przesun do przodu
+            else{
+                road[newPlace] = road[i];
+                road[i] = 0;
+                prevCar = newPlace;
+            }
+        }
+    }
+    return 0;
+}
+
+void *roadThread(void *arg) {
+    // cars move only if the light is green
+    int result = 0; // if result = 1 : kraksa
+    pid_t parentID = getppid();
+    while(1){
+        if(light){
+            // move only if light is green
+            result = moveCars(road);
+            if(result == 1){
+                // kraksa
+                // stop everything
+                //kill(parentID, SIGINT);
+            }
+        }
+        sleep(1);
+    }
+}
+
+void handleSignalUSR1(int s) {
+    // creates new car at the end of the road
+    // using signals one cant pass speed of a cor but using socket it's possible
+    if (road[49] == 1){
+        // crash sceanrio
+        printf("Kiddo Uno: Crash");
+        pid_t parentID = getppid();
+        kill(parentID, SIGINT);
+    }
+    else{
+        printf("Kiddo Uno: new car\n");
+        road[49] = 1;
+    }
+}
+
+void handleSignalUSR2(int s) {
+    // creates new car at the end of the road
+    // using signals one cant pass speed of a cor but using socket it's possible
+    canChange = 1;
+}
+
+
+
+int main() {
+    signal(SIGUSR1, handleSignalUSR1);
+    signal(SIGUSR2, handleSignalUSR2);
+    pid_t parentID = getppid();
+    pid_t myID = getpid();
+
+    // zmienna typu Id of thread
+    pthread_t lightID;
+    pthread_t roadID;
+
+    // we should pass the int[50] road and bool light
+    // tworzy thread z funkcji lightThread i przypisuje ID do lightID
+    pthread_create(&lightID, NULL, lightThread, NULL);
+    // tworzy thread z funkcji roadThread i przypisuje ID do roadID
+    pthread_create(&roadID, NULL, roadThread, NULL);
+
+    // czeka na zakoncznie threadID
+    // pthread_join(threadID, NULL);
+    while(1){
+        //printf("Im kiddo Uno\n");
+        printf("Uno: my ID: %d \n", myID);
+        printf("Uno: light: %d\n", light);
+        printf("Uno: road: [ ");
+        for(int i = 0; i < roadLen; i++) {
+            printf("%d ", road[i]);
+        }
+        printf("]\n");
+        //printf("ID of my parent: %d \n", parentID);
+        sleep(5);
+    }
+
+    return 0;
+}
+
+

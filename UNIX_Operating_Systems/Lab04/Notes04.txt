@@ -1,0 +1,74 @@
+// piszac skrypt nadac sobie uprawnienia 
+// chmod u+x skrypt.sh
+// ./skrypt.sh
+
+// wyjscie polecenia $(ls)
+// tablica=(1 2 3)
+// liczbowaTablica=$((1 2 3))
+
+// przekazywanie zmiennych do skryptu 
+// $1==1
+// $2 == "ala"
+
+// funkcje mogą zwracać liczby jednobajtowe 0-255
+
+// pierwsze kolowium 9.12 do 18.11 lab włacznie
+// male zadania na kartce, skrypty bash na komputerze
+1.
+touch first.sh
+nano first.sh
+>>#!/bin/bash
+>>declare -i var1
+>>var1=$1+$2
+>>echo $var1
+>>result=$(($1+$2+$3))
+>>echo $result
+>>exit 0
+chmod u+x first.sh
+first.sh 1 2 3
+
+//komentarzy w bashu sie nie uzywa
+2.
+touch scnd.sh
+chmod u+x scnd.sh
+nano scnd.sh
+#!/bin/bash
+
+echo $1 $2
+
+declare -i len1 len2
+let len1=${#1}
+let len2=${#2}
+
+a=${1:0} // nie dziala
+b=${2:0} // nie dziala
+echo $a $b
+
+if [[ 10 -gt 20 ]] ; then
+echo "10>20"
+elif [[ 10 -eq 20 ]] ; then
+echo "10=20"
+else 
+echo "10<20"
+fi
+
+if [[ $len1 -gt $len2 ]]
+then
+echo "napis '$1' jest dluzszy niz napis '$2'" 
+elif [[ $len1 -eq $len2 ]]
+then
+echo "napisy sa rownej dlugosci"
+else
+echo "napis '$2' jest dluzszy niz napis '$1'" 
+fi
+
+if (( $1 > $2 )) // powinno dzialac teraz bo porównuje na odwrót ((${1:0} < ${2:0})) nie dziala
+then
+echo "pierwszy napis jest wczesniej w alfabecie"
+else
+echo "drugi napis jest wczesniej w alfabecie"
+fi
+
+exit 0
+
+

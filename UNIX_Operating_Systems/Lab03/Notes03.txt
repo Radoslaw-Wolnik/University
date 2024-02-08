@@ -1,0 +1,91 @@
+https://lmielewczyk.pl/teaching/ug-2023/inf-og-ns/sys-op/lab/lab3.php
+
+cd /etc/console-setup
+ls -l
+Contains setup files
+
+find -type f -name "xfce*"
+It's not what i wanted so nvm
+
+
+https://www.ibm.com/docs/en/zos/2.4.0?topic=csf-character-special-files
+https://www.baeldung.com/linux/dev-directory
+/dev
+
+cd /dev/pts
+ls -l 
+The contents under the directory are pseudo-terminals that allow applications to receive input and display output
+eg:
+crw--w---- 1 rwolnik tty  136, 1 paź 28 10:46 1
+c--------- 1 root    root   5, 2 paź 28 10:23 ptmx
+
+
+f zawiesi sie 
+
+cd /dev
+ls -l null
+echo "nothing" >> null
+This will return an End of File (EOF) character
+
+
+tty pliki terminala
+nie mozna usunac
+jesli przekierujemy cos do terminala to wyswietli sie  w tym terminalu
+
+echo " --> "
+sigma login @sigma..sth
+
+dev/etc tutaj pliki terminala
+mesg y
+echo "sth" >> 3 dev/pts
+polecenie write
+
+dev/pts
+
+symbol plik specjalny terminal 
+chmod 660 uprawnienia
+chmod 666
+rodzaj pliku c - plik specjalny
+
+--- dowiazanie twarde --
+dowiazanie twarde nie mozna dla dir mozna dla pliku
+ls -l ~
+ls -l ~ | grep "\bzad\b" strumien
+dowiazanie twarde jest zwyklym plikiem
+ls -il | grep "zad"
+
+zmienienie pliku zmieni dowiazanie
+touch a
+lm dowiazanie a
+rm a 
+dowiazanie zostamnie
+
+
+--- dowiazanie miekkie ---
+file -l link
+u can make to dir
+-s making dowiazanie symboliczne
+usuwanie pliku -> nie usuwa dowiazanie ale jest zlamane - nie prowadzi nigdzie
+dowiazanie symboliczne jest jak skroty
+
+zmieniajac dowiazanie (zawartosc) zmieniamy tez skrot 
+
+
+dowiazanie twarde jest ala kopia (nie do konca kopia)
+
+
+fifo za tydzien mam nadzieje ze jest znane
+w domu dokonczyc
+
+nc -Ul my_socket
+
+// 10
+// run binary file example
+chmod +x example                                               // adds permision to run
+./example                                                      // run example
+alias example = '~/AbsolutePath/example'                       // add alias
+example                                                        // run example
+unalias example                                                // remowes alias
+echo "alias example = '\~/AbsolutePath/example'\" >> ~/.bashrc // pernament alias added to .bashrc file
+source ~/.bashrc                                               // reloades .bashrc file
+example                                                        // run example

@@ -1,0 +1,112 @@
+https://www.lmielewczyk.pl/test/eNu9/
+
+dwa skrytpty i glowny potok
+
+
+2.
+trzy skrypty kazdy czeka na odpowiedz kolejnego
+first.sh -> scnd.sh -> thrd.sh
+
+#!/bin/bash
+dzisiaj=$(date +%Y-%m-%d)
+
+if [ $# -eq 0 ]; then
+  echo "Wywolujac program napisz: $0 <arg, arg, arg...>"
+  exit 1
+fi
+
+even=()
+odd=()
+for (( i=$#; i>0; i-- )); do
+  if [[ $((${!i}%2)) -eq 0 ]]; then
+    even+=(${!i})
+  else
+    odd+=(${!i})
+  fi
+done
+
+echo "${even[*]}"
+echo "${odd[*]}"
+
+bash scnd.sh ${even[*]} &
+PIDS=$!
+wait
+resEven=$?
+echo " $resEven"
+
+bash scnd.sh ${odd[*]} &
+PIDS=$!
+wait
+resOdd=$?
+
+touch $dzisiaj
+echo $* > $dzisiaj
+echo $(($resEven+$resOdd)) >> $dzisiaj
+exit 0
+
+
+
+----
+
+
+
+#!/bin/bash
+
+max=$1
+min=$1
+for (( i=$#; i>0; i-- )); do
+  if [[ ${!i} -gt $max ]]; then
+    max=${!i}
+  elif [[ ${!i} -lt $min ]]; then
+    min=${!i}
+  fi
+done
+
+
+echo "scnd max: $max"
+echo "scnd min: $min"
+
+./thrd.sh $min $max &
+wait
+Tres=$?
+echo "scnd got: $Tres"
+
+exit $Tres
+
+
+----
+
+
+#!/bin/bash
+
+max=$1
+min=$1
+for (( i=$#; i>0; i-- )); do
+  if [[ ${!i} -gt $max ]]; then
+    max=${!i}
+  elif [[ ${!i} -lt $min ]]; then
+    min=${!i}
+  fi
+done
+
+
+echo "scnd max: $max"
+echo "scnd min: $min"
+
+./thrd.sh $min $max &
+wait
+Tres=$?
+echo "scnd got: $Tres"
+
+exit $Tres
+
+
+
+nie dziala :(((
+
+1.
+
+
+
+
+

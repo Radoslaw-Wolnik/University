@@ -1,0 +1,707 @@
+Ctrl + F2 change all occurances
+Ctrl + C SIGINT interupt - end foreground working process - terminate
+Ctrl + Z  suspends a process and puts it in the background (can be started again using --bg-- or --fg--)
+--------------------------- Zadanie 1 --------------------------
+
+#include <unistd.h> // includes sleep()
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <time.h>
+
+
+// global variables
+pthread_mutex_t avaliable;
+
+
+void UsePrinter(int pages, int empID){
+    // shared resources
+    printf("\n Job %d has started\n", empID); 
+    for(int i = 0; i < pages; i++){
+        sleep(1);
+    }
+    printf("\n Job %d has finished\n", empID); 
+
+}
+
+
+void *Employee(void *arg) {
+    int empID = *((int *)arg);
+    printf("My emp id: %d\n", empID);
+    int DoIWantToUsePrinter = 0;
+    unsigned int seed = (unsigned int)time(NULL);
+    srand(seed);
+    while(1){
+        DoIWantToUsePrinter = rand() % 11 + 0; // liczby od 0 do 10
+        if(DoIWantToUsePrinter == 7){
+            pthread_mutex_lock(&avaliable);
+            UsePrinter(rand() % 11 + 0, empID);
+            pthread_mutex_unlock(&avaliable);
+            // idk but mby locking and unlocking could be inside use printer? 
+        }
+        sleep(1);
+    }
+}
+
+
+int main() {
+    
+    FILE *file;
+    int empAmount;
+    file = fopen("UnoNumero.txt", "r");
+
+    if (file == NULL) {
+        fprintf(stderr, "Nie udalo sie otworzysc pliku\n");
+        return 1;
+    }
+
+    if (fscanf(file, "%d", &empAmount) != 1) {
+        fprintf(stderr, "Nie udalo sie odczytac danych z pliku\n");
+        fclose(file);
+        return 10;
+    }
+    if (empAmount <= 0){
+        fprintf(stderr, "Nieprawidlowa ilosc pracownikow\n");
+        return 20;
+    }
+    fclose(file);
+    int empIDs[empAmount];
+
+    // ?? Can One do that ??
+    pthread_t employees[empAmount]; 
+    for(int i = 0; i < empAmount; i++){
+        empIDs[i] = i;
+        pthread_create(&employees[i], NULL, Employee, (void *)&empIDs[i]);
+    }
+
+    // nie ma warunku konca dla watkow employees -> nie ma warunku konca dla glownego programu
+    // to end simply kill $!
+    while(1){
+        sleep(1);
+    }
+
+    return 0;
+}
+
+----------------- Dynamic memory allocation ----------------
+// Can be used if we dont know the size of array or if we want to be able to dynamicly change it
+// realloc
+THREADS_NUMBER = ???;
+    pthread_t thread_ids[THREADS_NUMBER];
+    int *thread_value = malloc(THREADS_NUMBER * sizeof(int));
+    if (thread_value == NULL) {
+        fprintf(stderr, "Memory allocation failed.\n");
+        return 1;
+    }
+    // Create threads
+    for (int i = 0; i < THREADS_NUMBER; ++i) {
+        thread_value[i] = i;
+
+        if (pthread_create(&thread_ids[i], NULL, threadFunction, (void *)&thread_value[i]) != 0) {
+            fprintf(stderr, "Error creating thread %d.\n", i);
+            return 1;
+        }
+    }
+
+free(thread_value);
+
+----------------------- Semaphore solution ----------------
+
+the same solution can be achived using semaphore insted of mutex
+if entering the critical section (in this case DoPrinter) decreases the semaphore value and then exiting it increses it
+
+so it would look a little bit like:
+
+Critical section:
+DoPrinter(){
+    do do do do sth
+    post(&semafor)
+}
+
+The Accesing section:
+*Thread(){
+    if (expresion){
+        wait(&semafor)
+        DoPrinter()
+    }
+}
+
+Remember in that case semaphore should start with value of 1
+
+------------------------ Zadanie 2 ------------------------
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <time.h>
+#include <unistd.h>
+
+//global variables
+
+sem_t semafor; // max value 5
+// semaphore cant get negative numbers although doing wait (decreasing val) on 0 yelds exception (CHYBA)
+// MAX VALUE OF 5 CAN BE DEFINED AS CONSTANT
+
+
+// Semaphores are typically used to control access to a shared resource or protect a critical section. 
+// The value often represents the number of available units of that resource.
+
+
+void *Producent(){
+    unsigned int seed = (unsigned int)time(NULL);
+    srand(seed); // setting seed for rand
+    // losuj liczbe
+    // jesli wynos == 2 to stworz produkt
+    int create = 0;
+    int current_value;
+    while(1){
+        create = rand() % 11 + 0; // liczby od 0 do 10
+        if(create == 2){
+            sem_getvalue(&semafor, &current_value);
+            // if semafor == 5
+            // wait - sleep - az sie zmniejszy i potem dodaj
+            if(current_value == 5){
+                while(current_value == 5){
+                    sleep(1);
+                    sem_getvalue(&semafor, &current_value);
+                }
+            }
+            // otherwise dodaj od razu
+            sem_post(&semafor);
+            printf("Producent: Cookie created\n");
+        }
+        sleep(1);
+    }
+}
+
+
+void *Konsumer(){
+    unsigned int seed = (unsigned int)time(NULL);
+    srand(seed); // setting seed for rand
+    // losuj liczbe 
+    // jesli wynosi == 7 to zjedz produkt - decrese semafor value
+    int eat = 0;
+    while(1){
+        eat = rand() % 11 + 0; // liczby od 0 do 10
+        if(eat == 7){
+            sem_wait(&semafor);
+            printf("Konsumer: Cookie eaten\n");
+        }
+        // if semafor == 0
+        // wait az sie zwiekszy i potem odejmij - wbudowane
+    }
+    sleep(1);
+}
+
+
+int main() {
+    FILE *file;
+    int fileNum[2];
+    
+    file = fopen("liczbaProducentowKonsumerow.txt", "r");
+
+    if (file == NULL) {
+        fprintf(stderr, "Nie udalo sie otworzysc pliku\n");
+        return 1;
+    }
+
+    for(int i = 0; i < 2; i++){
+        if (fscanf(file, "%d", &fileNum[i]) != 1) {
+            fprintf(stderr, "Nie udalo sie odczytac danych z pliku\n");
+            fclose(file);
+            return 10;
+        }
+        if(fileNum[i] <= 0){
+            fprintf(stderr, "Nieprawidlowa wartosc w pliku\n");
+            fclose(file);
+            return 20;
+        }
+    }
+    fclose(file);
+
+    /*
+    int sem_init(
+        sem_t *sem          // pointer to semaphore variable    ,
+        int pshared         // If = 0: can be used in threads only, else in process,
+        unsigned int value  // initial value of the semaphore counter
+    );
+    return value 0 on successful & -1 on failure
+    */
+
+    sem_init(&semafor, 0, 3);
+    
+    
+    // fileNum[0] ilosc producentow
+    // fileNum[1] ilosc konsumentow
+
+    pthread_t producents[fileNum[0]]; 
+    for(int i = 0; i < fileNum[0]; i++){
+        pthread_create(&producents[i], NULL, Producent, NULL);
+        sleep(3);
+    }
+
+    pthread_t konsumers[fileNum[0]]; 
+    for(int i = 0; i < fileNum[0]; i++){
+        pthread_create(&konsumers[i], NULL, Konsumer, NULL);
+        sleep(3);
+    }
+
+
+    // to end simply kill $! or Ctrl+C
+    while(1){
+        int current_value;
+        sem_getvalue(&semafor, &current_value);
+        printf("Main: Current semaphore val = %d\n", current_value);
+        sleep(1);
+
+    }
+    return 0;
+}
+
+
+
+------------------------ Zadanie 3 --------------------------
+// gcc Zadanie3.c -o za3 -lm 
+// becouse of math.h library
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <string.h>
+#include <math.h>
+#include <time.h>
+#include <unistd.h>
+
+//int EXIT_FAILURE = 11;
+
+int threadNum = 0;
+pthread_barrier_t my_barrier;
+pthread_barrier_t scnd_barrier;
+
+void reset_barrier() {
+    // Destroy the existing barrier
+    pthread_barrier_destroy(&my_barrier);
+
+    // Initialize a new barrier
+    pthread_barrier_init(&my_barrier, NULL, threadNum);
+}
+
+
+void *thRozklad(void *arg) {
+    int number = *(int *)arg;
+    int beginning = number;
+    char result[100] = "";
+    printf("There is many of us: %d\n", number);
+
+    // Perform some work before reaching the barrier
+    printf("Wait 1\n");
+    // Wait for all threads to reach the barrier
+    int barrier_result = pthread_barrier_wait(&my_barrier);
+    
+    // Check if this thread is the one to release others from the barrier
+    //if (barrier_result == PTHREAD_BARRIER_SERIAL_THREAD) {
+    //    reset_barrier();
+    //}
+    printf("Start mathing\n");
+
+    // ROZKLAD LICZBY NA LICZBY PIERWSZE
+    int k = 0;
+    while(number != 1){
+        printf("Do dod odododo %d \n", number);
+        int div = 0;
+        int prev = number;
+        double limit = ceil(sqrt(number)) + 1;
+        if ( number % 2 == 0){
+            div = 2;
+            number = number/2;
+        }
+        else{
+        for(int i = 3; i < (int)limit; i+=2){
+            if(number%i == 0){
+                div = i;
+                number = number /i;
+                break;
+            }
+        }}
+        // nasza liczba jest pierwsza
+        if(number == prev){
+            div = number;
+            number = number/number;
+        }
+        char numChar[4];
+        snprintf(numChar, sizeof(numChar), "%d", div);
+        printf("div: %d, number: %d, prev: %d\n", div, number, prev);
+        strcat(result, numChar);
+        strcat(result, ", ");
+        printf("result: %s\n", result);
+        k+=1;
+    }
+    printf("Wait 2\n");
+
+    // kolejna barrier
+    // wait
+    barrier_result = pthread_barrier_wait(&scnd_barrier);
+    printf("All Waited\n");
+    // Wypisz solution
+    printf("Rozklad liczby: %d na czynniki to: %s \n", beginning, result);
+    return NULL;
+}
+
+
+
+int main() {
+
+    // open file and read to determine the ammount of numbers
+    FILE *file = fopen("threeNumbers.txt", "r");
+    
+    if (file == NULL) {
+        fprintf(stderr, "Unable to open the file.\n");
+        return 1;
+    }
+
+    int currentNumber = 0;
+    // Read each number from the file
+    while (fscanf(file, "%d", &currentNumber) == 1) {
+        threadNum += 1;
+    }
+    printf("Main: Number of threads: %d\n", threadNum);
+
+    // Reset the file position indicator to the beginning
+    fseek(file, 0, SEEK_SET);
+    
+    pthread_t threads[threadNum];
+    int numbers[threadNum];
+    int i = 0;
+    while (fscanf(file, "%d", &currentNumber) == 1) {
+        numbers[i] = currentNumber;
+        i++;
+    }
+
+    fclose(file);
+
+
+    printf("Main: numbers saved to array\n");
+
+    // Initialize the my_barrier with the number of threads
+    if (pthread_barrier_init(&my_barrier, NULL, threadNum) != 0) {
+        perror("Error initializing barrier");
+        return EXIT_FAILURE;
+    }
+
+    // Initialize the scnd_barrier with the number of threads
+    if (pthread_barrier_init(&scnd_barrier, NULL, threadNum) != 0) {
+        perror("Error initializing barrier");
+        return EXIT_FAILURE;
+    }
+
+
+    // Create threads
+    for (int i = 0; i < threadNum; ++i) {
+        if (pthread_create(&threads[i], NULL, thRozklad, (void *)&numbers[i]) != 0) {
+            fprintf(stderr, "Error creating thread %d.\n", i);
+            return EXIT_FAILURE;
+        }
+    }
+   //while(1){
+   //   sleep(1);
+   //}
+
+
+    // Wait for threads to finish
+    for (int i = 0; i < threadNum; ++i) {
+        if (pthread_join(threads[i], NULL) != 0) {
+            fprintf(stderr, "Error joining thread %d.\n", i);
+            return EXIT_FAILURE;
+        }
+    }
+
+
+   // Destroy the barriers
+   if (pthread_barrier_destroy(&my_barrier) != 0) {
+        perror("Error destroying MY barrier");
+        return EXIT_FAILURE;
+   }
+   if (pthread_barrier_destroy(&scnd_barrier) != 0) {
+        perror("Error destroying SCND barrier");
+        return EXIT_FAILURE;
+   }
+
+    printf("Main thread completed.\n");
+
+    return 0;
+}
+
+
+
+------------------------ Zadanie 4 -------------------------------
+
+// parent : parent : parent : parent : parent : parent : parent : parent : parent : 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <time.h>
+#include <stdbool.h>
+#include <sys/wait.h>
+#include <signal.h>
+// pthread_create - tworzy watek.
+// pthread_join - czeka na zakonczenie watku.
+// pthread_self - zwraca id watku.
+// pthread_exit - konczy watek
+
+pid_t UnoID;
+pid_t DosID;
+bool flag = 1;
+bool kidsAlive = 0;
+void handleSignalINT(int s) {
+    // if there is a crash then child sends signal -SIGINT to parent
+    flag = 0;
+    printf("Crahs\n");
+}
+
+void handleSIGUSR1(int s) {
+    // send by kiddoUno if it changed the light
+    // pass it to kiddoDos
+    if(kidsAlive){
+        kill(DosID, SIGUSR2);
+    }
+    // there is boolan kidsAlive becouse theoreticly sb could send SIGUSR1/SIGUSR2 to main programm without it having kids yet
+}
+
+void handleSIGUSR2(int s) {
+    // send by kiddoDos if it changed the light
+    // pass it to kiddoUno
+    if(kidsAlive){
+        kill(UnoID, SIGUSR2);
+    }
+}
+
+
+int main() {
+    pid_t myID = getpid();
+    const char *childUno = "./kiddoUno";
+    const char *childDos = "./kiddoDos";
+    // Set the seed for rand() using the current time
+    srand((unsigned int)time(NULL));
+    signal(SIGINT, handleSignalINT);
+    signal(SIGUSR1, handleSIGUSR1);
+    signal(SIGUSR2, handleSIGUSR2);
+    
+
+    const char *childMono = "./kiddoUno";
+    pid_t InvokedKids[2];
+    char *args[] = {NULL};
+    // we use same child process, invoke it twice and exit to main body where we can do things on the invoked processes
+    for (int i = 0; i < 2; ++i) {
+        //pid_t pid = fork();
+        InvokedKids[i] = fork();
+        pid_t pid = InvokedKids[i];
+        if (pid == -1) {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+
+        if (pid == 0) {
+            // This is the child process
+            execv(childMono, args);
+            exit(EXIT_SUCCESS);
+        }
+    }
+
+    UnoID = InvokedKids[0];
+    DosID = InvokedKids[1];
+    kill(UnoID, SIGUSR2);
+    kill(UnoID, SIGUSR2);
+    kidsAlive = 1;
+
+    printf("%d : %d\n", InvokedKids[0], InvokedKids[1]);
+    printf("%d : %d\n", UnoID, DosID);
+
+
+    printf("The main body of program -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-\n");
+    // main body : 
+    int i = 0;
+    while(flag){
+        // rand zakres 1-2
+        int randNum = rand() % 2 + 1;
+        i += 1;
+        printf("Curr iteration of rand int: %d\n", i);
+        printf("parent: curr rand int: %d\n", randNum);
+        if (randNum == 1){
+            kill(UnoID, SIGUSR1);
+        }
+        if (randNum == 2){
+            kill(DosID, SIGUSR1);
+        }
+        fflush(stdout);
+        sleep(10);
+    }
+
+    // Ending alive children
+    // as they run infinitely
+    kill(UnoID, SIGTERM);
+    kill(DosID, SIGTERM);
+    
+    return 0;
+}
+
+
+
+// kiddo Mono : kiddo Uno : kiddo Mono : kiddo Uno : kiddo Mono : kiddo Uno : kiddo Mono : 
+
+
+// exec name: kiddoUno
+// SIGUSR1 send to parentID - changed light - another kid can change light
+// SIGINT to parent if crash occured
+// SIGUSR1 - create new car
+// SIGUSR2 - change canChange light - another kid changed lioght and parrent communicates that to us
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <time.h>
+#include <stdbool.h>
+#include <signal.h>
+
+bool light = 0;
+bool canChange = 1; // in second child set as 1
+int road[50];
+const int roadLen = sizeof(road) / sizeof(road[0]);
+
+void *lightThread(void *arg) {
+    // thread symuliting trafic Lights 
+    // every 10s lights change state
+    // 0 : false : red light
+    // 1 : true : green light
+    // either light can be passed in incantation of function or be a global var
+    pid_t parentID = getppid();
+    while(1){
+        // if changed state send signal to parent that changed state
+        // parent will pass it to the second child
+        // child will only change state if it got signal that another child changed state
+        // one child begins with red light, one begins with green light
+        if(canChange){
+            light = !light;
+            //kill(parentID, SIGUSR1);
+            canChange = 1;
+        }
+        //thread.moveCars zalezy od light
+        sleep(2);
+    }
+
+}
+
+
+int moveCars(){
+    // function gets list of int[50]
+    // if road[i] = 0 : puste pole
+    // if road[i] != 0 : there is car here
+    // cars move with speed 1 - 10
+    // number tells how much car moves forward ;; 1 : 1 cell forward ;; 2 : 2 cells forward etc
+
+    if(road[0] != 0){
+        road[0] = 0;
+    }
+    int prevCar = -100;
+    // move the rest of cars
+    for(int i = 1; i < roadLen; i++){
+        if(road[i] != 0){
+
+            int newPlace = i - 1;
+            // sprawdzenie czy "przeskoczylo" inne auto - kraksa
+            if(newPlace < prevCar){
+                return 1;
+            }
+            // wyjechalo
+            else if(newPlace < 0){
+                road[i] = 0;
+            }
+            // przesun do przodu
+            else{
+                road[newPlace] = road[i];
+                road[i] = 0;
+                prevCar = newPlace;
+            }
+        }
+    }
+    return 0;
+}
+
+void *roadThread(void *arg) {
+    // cars move only if the light is green
+    int result = 0; // if result = 1 : kraksa
+    pid_t parentID = getppid();
+    while(1){
+        if(light){
+            // move only if light is green
+            result = moveCars(road);
+            if(result == 1){
+                // kraksa
+                // stop everything
+                //kill(parentID, SIGINT);
+            }
+        }
+        sleep(1);
+    }
+}
+
+void handleSignalUSR1(int s) {
+    // creates new car at the end of the road
+    // using signals one cant pass speed of a cor but using socket it's possible
+    if (road[49] == 1){
+        // crash sceanrio
+        printf("Kiddo Uno: Crash");
+        pid_t parentID = getppid();
+        kill(parentID, SIGINT);
+    }
+    else{
+        printf("Kiddo Uno: new car\n");
+        road[49] = 1;
+    }
+}
+
+void handleSignalUSR2(int s) {
+    // creates new car at the end of the road
+    // using signals one cant pass speed of a cor but using socket it's possible
+    canChange = 1;
+}
+
+
+
+int main() {
+    signal(SIGUSR1, handleSignalUSR1);
+    signal(SIGUSR2, handleSignalUSR2);
+    pid_t parentID = getppid();
+    pid_t myID = getpid();
+
+    // zmienna typu Id of thread
+    pthread_t lightID;
+    pthread_t roadID;
+
+    // we should pass the int[50] road and bool light
+    // tworzy thread z funkcji lightThread i przypisuje ID do lightID
+    pthread_create(&lightID, NULL, lightThread, NULL);
+    // tworzy thread z funkcji roadThread i przypisuje ID do roadID
+    pthread_create(&roadID, NULL, roadThread, NULL);
+
+    // czeka na zakoncznie threadID
+    // pthread_join(threadID, NULL);
+    while(1){
+        //printf("Im kiddo Uno\n");
+        printf("Uno: my ID: %d \n", myID);
+        printf("Uno: light: %d\n", light);
+        printf("Uno: road: [ ");
+        for(int i = 0; i < roadLen; i++) {
+            printf("%d ", road[i]);
+        }
+        printf("]\n");
+        //printf("ID of my parent: %d \n", parentID);
+        sleep(5);
+    }
+
+    return 0;
+}
+
