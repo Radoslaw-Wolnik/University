@@ -12,3 +12,4 @@ _Implementation of key design patterns in oop_
 - [ ] extracurricular implementation of Abstract Factory / Factory Method design pattern
 - [ ] extracurricular implementation of Prototype design pattern
 - [ ] revise Julia's projects and think of my own implementations (she's got very good examples)
+- [ ] alexandria
