@@ -5,6 +5,6 @@ _Implementation of key design patterns in oop_
 * **03-JavaMarkt-Command** - implementing Command design pattern in project representing shop website JavaMarkt
 * **04-WarGames-Observer** - implementing Observer design pattern in project representing two generals with their armies that battle each other
 
-##ToDo
+## ToDo
 - [ ] translate to english
 - [ ] code revision
