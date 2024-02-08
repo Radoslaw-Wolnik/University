@@ -1,4 +1,4 @@
-package kalkulator;
+package calculator;
 
 
 import java.lang.Math;

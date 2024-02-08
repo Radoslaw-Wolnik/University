@@ -1,29 +1,29 @@
-package kalkulator;
+package calculator;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.floor;
 
 import java.math.BigInteger;
 
-public class BigCalculator extends Calculator {
+public class CalculatorBigInt extends Calculator {
 
 
     private int state = 0;
     private int memory;
 
-    public BigCalculator(){
+    public CalculatorBigInt(){
         setState(0);
     }
 
-    public BigCalculator(int state){
+    public CalculatorBigInt(int state){
         setState(state);
     }
 
-    public BigCalculator(double state){
+    public CalculatorBigInt(double state){
         setState((int) floor(state));
     }
 
-    public BigCalculator(String a) {
+    public CalculatorBigInt(String a) {
         setState(0);
     }
 

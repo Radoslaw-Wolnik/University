@@ -1,4 +1,6 @@
-package kalkulator;
+package test;
+
+import calculator.Calculator;
 
 import org.junit.*;
 
