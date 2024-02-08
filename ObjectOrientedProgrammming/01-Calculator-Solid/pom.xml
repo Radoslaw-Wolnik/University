@@ -4,9 +4,13 @@
     http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>pl.untitled</groupId>
-    <artifactId>kakulator</artifactId>
+    <groupId>pl.kalkulator</groupId>
+    <artifactId>calculator</artifactId>
     <version>1</version>
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

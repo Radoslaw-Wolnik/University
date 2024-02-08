@@ -1,8 +1,6 @@
-package test;
-
 import calculator.Calculator;
-
-import org.junit.*;
+import calculator.CalculatorBigInt;
+import org.junit.Test;
 
 import static java.lang.Integer.MAX_VALUE;
 import static org.junit.Assert.assertEquals;
@@ -12,7 +10,7 @@ public class TestCalculator {
 
     public Calculator sut;
     //bigCalculator
-    public BigCalculator tus;
+    public CalculatorBigInt tus;
     /*@Before
     public void initial(){
         sut = new Calculator();
