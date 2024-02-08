@@ -1,8 +1,6 @@
 package calculator;
 
 
-import java.lang.Math;
-
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.floor;
 
@@ -27,8 +25,7 @@ public class Calculator {
     }
 
 
-
-    private void setState(int state){
+    protected void setState(int state) {
         this.state = state;
     }
 

@@ -1,9 +1,9 @@
 package calculator;
 
+import java.math.BigInteger;
+
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.floor;
-
-import java.math.BigInteger;
 
 public class CalculatorBigInt extends Calculator {
 
@@ -12,7 +12,7 @@ public class CalculatorBigInt extends Calculator {
     private int memory;
 
     public CalculatorBigInt(){
-        setState(0);
+        super();
     }
 
     public CalculatorBigInt(int state){

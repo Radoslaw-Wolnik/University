@@ -184,14 +184,14 @@ public class TestCalculator {
     //bigCalculator tests
     @Test
     public void BigtestAddOne(){
-        tus = new BigCalculator(12);
+        tus = new CalculatorBigInt(12);
         tus.add(10);
         assertEquals("12 + 10 = 22", 22, tus.getState());
     }
 
     @Test
     public void BigOverRangeAdd2() {
-        tus = new BigCalculator(MAX_VALUE / 2 + 10);
+        tus = new CalculatorBigInt(MAX_VALUE / 2 + 10);
         int result = tus.getState();
         tus.add(MAX_VALUE / 2 + 10);
         assertEquals(result, tus.getState());
@@ -199,7 +199,7 @@ public class TestCalculator {
 
     @Test
     public void BigOverRangeMulti2(){
-        tus = new BigCalculator(MAX_VALUE/2 + 10);
+        tus = new CalculatorBigInt(MAX_VALUE / 2 + 10);
         int result = tus.getState();
         tus.multi(MAX_VALUE/2 + 10);
         assertEquals(result, tus.getState());
