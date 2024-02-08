@@ -1,3 +1,0 @@
-- [ ] Clone repositories
-- [ ] insted of using add cloned_repo_name use git submodule add <url> ObjectOrientedProgrammming/03-koszyk-rwolnik
-- [ ] what is < url > ? 
