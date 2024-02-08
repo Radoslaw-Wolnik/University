@@ -1,10 +1,11 @@
-//package RPN
+package main.java.RPN;
 //import SolveRPN.java
 /* zgodnosc z solid*/
-package StackRPN;
+
 
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 //import java.util.EmptyStackException;
+import RPN.Exceptions.*;
 
 public class RPN {
     private String Equation;

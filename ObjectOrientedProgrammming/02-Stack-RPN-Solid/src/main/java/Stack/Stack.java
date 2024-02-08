@@ -1,4 +1,4 @@
-package Stack;
+package main.java.Stack;
 import java.util.EmptyStackException;
 
 public class Stack {
