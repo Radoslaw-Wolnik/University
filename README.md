@@ -94,7 +94,7 @@ _project of a relational database for some socialmedia site (Oracle)_[^6].
   - **Implementing database from project** - explonation
 </details>
 
-[^6]: Relational_Database [readme](Relational_Database/README.md)
+[^6]: Relational_Database [readme](Reletional_Database/README.md)
 <br>
 
 
