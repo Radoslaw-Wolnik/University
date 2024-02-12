@@ -36,24 +36,9 @@ _Projects in C and Asembly_[^2].
 [^2]: LowLevelProgramming [readme](Low_Level_Programming/README.md)
 <br>
 
-## Machine_Learning
-_Machines... They... They...  Are learning!_[^3].
-
-<details>
-  <summary>Developed skills</summary>
-  
-  - **How to divide data** - what was it about
-  - **Its all statistics** - same
-  - **How to train models** - more information
-  - **How to check if they are trained good** - explonation
-</details>
-
-[^3]: Machine_Learning [readme](Machine_Learning/README.md)
-<br>
-
 
 ## ObjectOrientedProgramming
-_Implementation of key design patterns in oop_[^4].
+_Implementation of key design patterns in oop_[^3].
 
 <details>
   <summary>Developed skills</summary>
@@ -63,12 +48,12 @@ _Implementation of key design patterns in oop_[^4].
   - **Implementing some key design patterns** - more information
 </details>
 
-[^4]: ObjectOrientedProgramming [readme](ObjectOrientedProgrammming/README.md)
+[^3]: ObjectOrientedProgramming [readme](ObjectOrientedProgrammming/README.md)
 <br>
 
 
 ## Python_Basics
-_Basic strutures of language and implementations_[^5].
+_Basic strutures of language and implementations_[^4].
 
 <details>
   <summary>Developed Skills</summary>
@@ -79,11 +64,11 @@ _Basic strutures of language and implementations_[^5].
   - **Dictionaries** - explonation
 </details>
 
-[^5]: Python_Basics [readme](Python_Basics/README.md)
+[^4]: Python_Basics [readme](Python_Basics/README.md)
 <br>
 
 ## Relational_Database
-_project of a relational database for some socialmedia site (Oracle)_[^6].
+_project of a relational database for some socialmedia site (Oracle)_[^5].
 
 <details>
   <summary>Developed skills</summary>
@@ -94,14 +79,14 @@ _project of a relational database for some socialmedia site (Oracle)_[^6].
   - **Implementing database from project** - explonation
 </details>
 
-[^6]: Relational_Database [readme](Reletional_Database/README.md)
+[^5]: Relational_Database [readme](Reletional_Database/README.md)
 <br>
 
 
 
 
 ## UNIX_Operating_Systems
-_Managing UNIX Operating Systems_[^7].
+_Managing UNIX Operating Systems_[^6].
 
 <details>
   <summary>Developed skills</summary>
@@ -112,7 +97,7 @@ _Managing UNIX Operating Systems_[^7].
   - **C syncing threads** - explonation
 </details>
 
-[^7]: UNIX_Operating_Systems [readme](UNIX_Operating_Systems/README.md)
+[^6]: UNIX_Operating_Systems [readme](UNIX_Operating_Systems/README.md)
 <br>
 
 
