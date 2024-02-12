@@ -13,5 +13,14 @@ _Implementation of basic data structures in Python_
 - [ ] pd28 - binary trees  
 - [ ] pd29 - heap  
 - [ ] pd30 - recap: sorting, data structures
-
-
+- Code review - english or polish not both
+- [ ] pd21 
+- [ ] pd22 
+- [ ] pd23 
+- [ ] pd24 
+- [ ] pd25  
+- [ ] pd26 
+- [ ] pd27  
+- [ ] pd28  
+- [ ] pd29 
+- [ ] pd30
