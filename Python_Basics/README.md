@@ -1,7 +1,8 @@
 # Python-projects-jupyter
 _Academic Python projects implemented using jupyter notebooks_
 
-## Code rewiew
+## To Do
+- Change from notebooks into individual projects with scripts
 - [ ] pd01 - game of life and some small stuff  
 - [ ] **pd02 - galapagos - processing data**  
 - [ ] pd03 - binary images  
