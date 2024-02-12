@@ -17,3 +17,4 @@ _Academic Python projects implemented using jupyter notebooks_
 - [ ] pd12 - decorators pt2  
 - [ ] **pd13 - hashing tables**  
 - [ ] pd14 - recap: horner etc, objects, decorators, iterators
+- Code review - english or polish not both - mby?
