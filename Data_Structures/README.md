@@ -2,7 +2,7 @@
 _Implementation of basic data structures in Python_
 
 ## To Do
-- Change from notebooks int individual projects with scripts
+- Change from notebooks into individual projects with scripts
 - [ ] pd21 - functions once again  
 - [ ] pd22 - plots and sorting  
 - [ ] pd23 - ackerman function  
