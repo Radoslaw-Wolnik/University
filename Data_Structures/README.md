@@ -1,7 +1,8 @@
 ## DataStructures
 _Implementation of basic data structures in Python_
 
-## Code rewiew 
+## To Do
+- Change from notebooks int individual projects with scripts
 - [ ] pd21 - functions once again  
 - [ ] pd22 - plots and sorting  
 - [ ] pd23 - ackerman function  
@@ -11,4 +12,6 @@ _Implementation of basic data structures in Python_
 - [ ] pd27 - reversable link list  
 - [ ] pd28 - binary trees  
 - [ ] pd29 - heap  
-- [ ] pd30 - recap: sorting, data structures  
+- [ ] pd30 - recap: sorting, data structures
+
+
