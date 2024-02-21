@@ -2,7 +2,7 @@
 _Implementation of basic data structures in Python_
 
 ## To Do
-- Change from notebooks into individual projects with scripts
+- Change from notebooks into individual projects
 - [ ] pd21 - functions once again  
 - [ ] pd22 - plots and sorting  
 - [ ] pd23 - ackerman function  
@@ -13,14 +13,10 @@ _Implementation of basic data structures in Python_
 - [ ] pd28 - binary trees  
 - [ ] pd29 - heap  
 - [ ] pd30 - recap: sorting, data structures
-- Code review - english or polish not both
-- [ ] pd21 
-- [ ] pd22 
-- [ ] pd23 
-- [ ] pd24 
-- [ ] pd25  
-- [ ] pd26 
-- [ ] pd27  
-- [ ] pd28  
-- [ ] pd29 
-- [ ] pd30
+
+### to basics
+pd 21
+pd 22
+pd 23 but with timeout or possibly to stop recursion
+
+
