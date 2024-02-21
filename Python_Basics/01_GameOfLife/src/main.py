@@ -126,7 +126,7 @@ if __name__ == '__main__':
     my_path = root_folder / "out/results_gra.txt"
     with open(my_path, 'w') as result_file:
         result_file.write('w drugim pokoleniu jest zywych {} komorek\n'.format(results['gen2']))
-cd Git        result_file.write('w 37 generacji komurka w 2 wierszu 19 kolumnie ma {} sąsiadów\n'.format(results['gen37']))
+        result_file.write('w 37 generacji komurka w 2 wierszu 19 kolumnie ma {} sąsiadów\n'.format(results['gen37']))
         result_file.write(
             'populacja stabilizyje sie w {} pokoleniu, sklada sie z {} zywych komorek\n'.format(results['same'],
                                                                                                 results[
