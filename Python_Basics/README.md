@@ -1,5 +1,5 @@
 # Python-projects-jupyter
-_Academic Python projects implemented using jupyter notebooks_
+_Academic Python projects_
 
 ## To Do
 ### Change from notebooks into individual projects with scripts
