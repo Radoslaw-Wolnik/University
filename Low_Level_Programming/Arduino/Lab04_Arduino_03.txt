@@ -1,0 +1,22 @@
+void setup() {
+  Serial.begin(9600);
+  pinMode(11, OUTPUT);
+}
+
+float num = 0;
+void loop(){
+  
+  if (Serial.available() > 0){
+   String text = Serial.readString();
+   num = text.toFloat();
+   if (num > 100)
+    num = 100;
+   if (num < 0)
+    num = 0;
+   num = 255 * num * 0.01;
+   Serial.println("Dioda swieci na " + String(int(num/255*100)) + " % ");
+   
+  }
+  analogWrite(11, num);
+  
+}

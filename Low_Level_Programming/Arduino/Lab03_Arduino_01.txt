@@ -1,0 +1,29 @@
+void setup() {
+  pinMode(13, OUTPUT);
+  pinMode(12, INPUT_PULLUP);
+}
+
+// the loop function runs over and over again forever
+// x = x *2
+// x<<1
+
+bool dioda = 0;
+
+void loop() {
+  //digitalWrite(12, HIGH);   // turn the LED on (HIGH is the voltage level)
+  //delay(100);                       // wait for a second
+  //digitalWrite(12, LOW);    // turn the LED off by making the voltage LOW
+  //delay(100);                       // wait for a second
+  if (digitalRead(12) == LOW){
+    if (dioda == false)
+      dioda = true;
+    else
+     dioda = false;
+  }
+
+  if (dioda)
+    digitalWrite(13, HIGH);
+  else
+    digitalWrite(13, LOW);
+  delay(100);
+}

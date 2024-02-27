@@ -1,0 +1,14 @@
+void setup() {
+  pinMode(11, OUTPUT);
+//  pinMode(A0, INPUT); //nie trzeba konfigurowac
+}
+
+
+
+
+int dioda_val = 0;
+void loop() {
+  dioda_val = analogRead(A0) / 4;  // 0- 1023 tylko wejscia z A
+  analogWrite(11,dioda_val);       // 0 - 255 tylko wyjscia z ~
+  //delay(100);
+}

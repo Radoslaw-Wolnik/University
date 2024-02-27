@@ -1,0 +1,23 @@
+void setup() {
+  pinMode(11, OUTPUT);
+  pinMode(12, INPUT_PULLUP);
+}
+
+// the loop function runs over and over again forever
+// x = x *2
+// x<<1
+
+
+int dioda = 0;
+
+void loop() {
+  if (digitalRead(12) == LOW){
+    dioda += 10;
+    if (dioda > 255)
+      dioda = 0;
+  }
+
+  analogWrite(11,dioda);
+  
+  delay(100);
+}
