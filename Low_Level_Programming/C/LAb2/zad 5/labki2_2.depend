@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1571828460 source:c:\users\rados\onedrive\documents\codeblocks\labki2_2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
