@@ -1,0 +1,27 @@
+LDI r16, 1
+LDI r17, 100
+LDI r26, 0x60
+LDI r27, 0x00
+
+loop:
+	ST X+, r16
+	INC r16
+	DEC r17
+	BRNE loop
+
+
+LDI r17, 100
+LDI r26, 0x60
+LDI r27, 0x00
+LDI r28, 0xC4
+LDI r29, 0x00
+
+loop2:
+	LD r18, X+
+	ST Y+, r18
+	DEC r17
+	BRNE loop2
+
+;
+
+

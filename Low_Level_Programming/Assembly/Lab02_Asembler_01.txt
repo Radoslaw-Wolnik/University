@@ -1,0 +1,11 @@
+.include "m8def.inc"
+
+CBI ddrb, 0   ;b0 wejscie "0"
+SBI ddrb, 2   ;wyjscie b2
+
+pocz:
+SBIS pinb, 0    ; sprawdza czy b0 = 1, jesli tak to pomija next line
+CBI	 portb, 2   ; ustawia b2 = 0
+SBIC pinb, 0    ; sprawdza czy b0 = 0, jesli tak to pomija next line
+SBI  portb, 2   ; ustawia b2 = 1
+RJMP pocz

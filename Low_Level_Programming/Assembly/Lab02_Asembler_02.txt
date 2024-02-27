@@ -1,0 +1,59 @@
+.include "m8def.inc"
+
+CBI ddrb, 0   ;b0 wejscie "0"
+SBI ddrb, 2   ;wyjscie b2
+
+pocz:
+SBIS pinb, 0    ; sprawdza czy b0 = 1, jesli tak to pomija next line
+CBI	 portb, 2   ; ustawia b2 = 0
+SBIC pinb, 0    ; sprawdza czy b0 = 0, jesli tak to pomija next line
+SBI  portb, 2   ; ustawia b2 = 1
+;RJMP pocz
+
+; adresowanie bezposrednine
+LDI r16, 0xA      ; zapisuje do r 16 liczbe 0xA = A = 10
+STS	0x60, r16     ; zapisuje do adresu 0x60 r16
+LDI r17, 0xA      ;10
+STS	0x61, r17
+LDI r18, 0xA      ;10
+STS	0x62, r18
+LDI r19, 0xC      ;12
+STS	0x63, r19
+
+; adresowanie bezposrednine
+LDI r16, 0xB      ;zapisuje do r 16 liczbe 0xB = B = 11
+STS	0x64, r16     ; zapisuje do 0x64 r16
+LDI r17, 0xB      ;11
+STS	0x65, r17
+LDI r18, 0xB      ;11
+STS	0x66, r18
+LDI r19, 0xC      ;12
+STS	0x67, r19
+
+
+; Dodawanie dwoch liczb
+; sumowanie bitow mlodszych (bez przeniesienia)
+LDS	r16, 0x63     ; zapisuje do r16 wartosc z pamieci 0x63
+LDS	r17, 0x67     ; zapisuje do r17 0x67
+ADD r16, r17      ; dodaje bez przeniesienia r16 i r17, zapisuje wynik do r16
+STS 0x6B, r16     ; zapisuje r16 do 0x6B
+
+; sumowanie bitow starszych(z przeniesieniem)
+LDS	r16, 0x62
+LDS	r17, 0x66
+ADC r16, r17     ; dodaje z przeniesieniem r16 i r17, zapisuje wynik do r16
+STS 0x6A, r16
+
+LDS	r16, 0x61
+LDS	r17, 0x65
+ADC r16, r17
+STS 0x69, r16
+
+LDS	r16, 0x60
+LDS	r17, 0x64
+ADC r16, r17
+STS 0x68, r16
+
+
+
+

@@ -1,0 +1,55 @@
+LDI	r16, 18    ; przypisuje wartosc 18 do r16
+MOV r18, r16   ; kopiuje wartosc rejestru r16 do r18
+;
+; adresowanie bezposrednine
+LDI r16, 0xA
+STS	0x60, r16
+;
+; adresowanie posrednie
+LDI r26, 0x61
+LDI r27, 0x00
+LDI r16, 0xB
+ST 	X, r16
+
+; bezposrednie zaladowanie pamieci 
+LDS	r17, 0x61
+
+;posrednie ladowanie pamieci
+LDI r26, 0x61
+LDI r27, 0x00
+LD r17, X
+
+
+;posrednie przerzucic z 0x0060 do 0x0061
+LDI r26, 0x60
+LDI r27, 0x00
+LD r17, X
+INC r26
+;LDI r26, 0x61
+;LDI r27, 0x00
+ST 	X, r17
+
+
+LDI r16, 1
+LDI r17, 100
+LDI r26, 0x60
+LDI r27, 0x00
+
+loop:
+	ST X+, r16
+	INC r16
+	DEC r17
+	BRNE loop
+
+
+LDI r17, 100
+LDI r26, 0x60
+LDI r27, 0x00
+LDI r28, 0xC4
+LDI r29, 0x00
+
+loop:
+	LD r18, X+
+	ST Y+, r18
+	DEC r17
+	BRNE loop
