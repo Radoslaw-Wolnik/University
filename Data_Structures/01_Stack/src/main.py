@@ -93,6 +93,24 @@ def infix_bracket_check(exp):
     return result.get()
 
 
+# without Stack
+def system_repr(system, number):
+    representation = []
+    while number > 0:
+        representation.append(number%system)
+        number = number//system
+    return representation
+
+
+# with Stack
+def system_repr_stack(system, number):
+    representation = Stack()
+    while number > 0:
+        representation.add(number%system)
+        number = number//system
+    return representation
+
+
 if __name__ == '__main__':
     x = "20 10 + 75 45 - *"
     temp = count_postfix(x)
@@ -114,3 +132,9 @@ if __name__ == '__main__':
 
     tryEquation = '( 11 + ( ( 22 + 3 ) * ( 44 - 52 ) ) )'  # -189
     print(infix_bracket_check(tryEquation))
+
+
+    # representing numbers in different base systems
+    print(system_repr(2, 8))
+    print(system_repr_stack(2, 8))
+    print(system_repr_stack(3, 8))
