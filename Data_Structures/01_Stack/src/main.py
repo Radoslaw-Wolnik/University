@@ -111,6 +111,28 @@ def system_repr_stack(system, number):
     return representation
 
 
+def decode(text):
+    stos = Stack()
+    for el in text:
+        if el in [str(x) for x in range(0, 10)]:
+            stos.push(int(el))
+        elif el == ']':
+            temp = [stos.pop()]
+            while stos.peak() != '[':
+                temp.append(stos.pop())
+            stos.pop()  # usuwanie [
+            multiplier = stos.pop()
+            temp.reverse()
+            stos.push(''.join(temp) * multiplier)
+        else:
+            stos.push(el)
+    res = []
+    while not stos.isEmpty():
+        res.append(stos.pop())
+    res.reverse()
+    return ''.join(res)
+
+
 if __name__ == '__main__':
     x = "20 10 + 75 45 - *"
     temp = count_postfix(x)
@@ -138,3 +160,15 @@ if __name__ == '__main__':
     print(system_repr(2, 8))
     print(system_repr_stack(2, 8))
     print(system_repr_stack(3, 8))
+
+    # decode
+    s1 = '3[a]2[bc]'
+    s2 = '3[a2[c]]'
+    s3 = '2[abc]3[cd]ef'
+
+    print(s1)
+    print(decode(s1))
+    print(s2)
+    print(decode(s2))
+    print(s3)
+    print(decode(s3))
