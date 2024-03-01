@@ -2,55 +2,68 @@ import matplotlib.pyplot as plt
 from random import choice
 import time
 
-def create_plt(sorting_algorytm):
+from src.plot.BubbleSort import BubbleSort
+
+
+def create_plt(sorting_algorythm):
     '''jako algorytm funkcji przekazywana jest odpowiednia funkcja sortujaca'''
-    N = [10, 100, 300, 500, 700]
-    # N =[2,3,4,10]
+    n = [10, 100, 300, 500, 700]
+    # small_n =[2,3,4,10]
 
     tries = 10
-    optymistic_plt = []
-    pesymistic_plt = []
+    optimistic_plt = []
+    pessimistic_plt = []
     average_plt = []
 
-    for lenght in N:
+    for length in n:
 
-        optymistyczny = [el for el in range(lenght)]
-        pesymistyczny = [lenght - el - 1 for el in range(lenght)]
-        sredni = [choice(optymistyczny) for _ in range(lenght)]
+        optimistic_data = [el for el in range(length)]
+        pessimistic_data = [length - el - 1 for el in range(length)]
+        average_data = [choice(optimistic_data) for _ in range(length)]
 
-        optymistic_avr = 0
-        pesymistic_avr = 0
+        optimistic_avr = 0
+        pessimistic_avr = 0
         average_avr = 0
         for _ in range(tries):
-            start = time.time()
-            sorting_algorytm(optymistyczny)
-            end = time.time()
-            optymistic_avr += end - start
 
+            sorting_algorythm.load_data(optimistic_data)
             start = time.time()
-            sorting_algorytm(pesymistyczny)
+            sorting_algorythm.execute()
             end = time.time()
-            pesymistic_avr += end - start
+            optimistic_avr += end - start
 
+            sorting_algorythm.load_data(pessimistic_data)
             start = time.time()
-            sorting_algorytm(sredni)
+            sorting_algorythm.execute()
+            end = time.time()
+            pessimistic_avr += end - start
+
+            sorting_algorythm.load_data(average_data)
+            start = time.time()
+            sorting_algorythm.execute()
             end = time.time()
             average_avr += end - start
 
-        optymistic_plt.append(optymistic_avr / tries)
-        pesymistic_plt.append(pesymistic_avr / tries)
+        optimistic_plt.append(optimistic_avr / tries)
+        pessimistic_plt.append(pessimistic_avr / tries)
         average_plt.append(average_avr / tries)
 
     plt.figure(figsize=(8, 5))
-    plt.plot(N, optymistic_plt, '-', color='skyblue', label='optymistyczna sytuacja')
-    plt.plot(N, pesymistic_plt, '-', color='crimson', label='pesymistyczna sytuacja')
-    plt.plot(N, average_plt, '-', color='green', label='srednia sytuacja')
+    plt.plot(n, optimistic_plt, '-', color='skyblue', label='optimistic situation')
+    plt.plot(n, pessimistic_plt, '-', color='crimson', label='pessimistic situation')
+    plt.plot(n, average_plt, '-', color='green', label='average situation')
     plt.legend(bbox_to_anchor=(1.04, 0.5), loc='center left', shadow=True, fontsize='x-large')
-    plt.xlabel('dlugosc listy')
-    plt.ylabel('czas [s]')
-    plt.title(sorting_algorytm.__name__)
+    plt.xlabel('length of list')
+    plt.ylabel('time [s]')
+    plt.title(type(sorting_algorythm).__name__)
     plt.show()
 
 
-create_plt(wstawienie_sort)
-create_plt(wstawienie_sort_while)
+if __name__ == '__main__':
+    bubble = BubbleSort()
+    create_plt(bubble)
+    # plot legend not in graphic fix it
+    # create_plt() - in different file - project structure
+    # not sure if merge sort is correct in case of heritage because it hase 2 more functions then sort interface
+    # insertion sort should be good though
+    # https://realpython.com/python-interface/
