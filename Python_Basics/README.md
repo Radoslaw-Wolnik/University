@@ -11,5 +11,6 @@ _Academic Python projects_
 - [ ] 06_Objects
 - [ ] 07_Inheritance
 - [ ] 08_Decorators
+- [ ] 09_PickleAndOther
 
 
