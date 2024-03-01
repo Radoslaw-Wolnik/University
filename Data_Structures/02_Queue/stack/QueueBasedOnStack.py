@@ -1,4 +1,4 @@
-from src.Stack import Stack
+from stack.Stack import Stack
 
 
 class QueueBasedOnStack:

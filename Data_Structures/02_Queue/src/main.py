@@ -1,5 +1,5 @@
 from src.Queue import Queue
-from src.QueueBasedOnStack import QueueBasedOnStack
+from src.QueueCycle import QueueCycle
 
 
 if __name__ == '__main__':
@@ -40,12 +40,32 @@ if __name__ == '__main__':
     print('\n')
     print(Try02)
 
-    # test queue based on 2 stacks
-    Kolejka = QueueBasedOnStack()
-    Kolejka.enqueue('E')
-    Kolejka.enqueue(1)
-    Kolejka.enqueue(2)
-    Kolejka.enqueue(3)
-    print(Kolejka.dequeue())
-    print(Kolejka.dequeue())
-    print(Kolejka.dequeue())
+    # test queue cycle ------------------------------------------
+    Try03 = QueueCycle(10)
+    example = [1, 2, 3, 4, 5, 6, 7, 'a']
+
+    for el in example:
+        Try03.enqueue(el)
+    print(Try03)
+    print()
+
+    while not Try03.is_empty():
+        print(Try03.dequeue(), ' ', end='')  # end = ''
+    print('\n')
+    print(Try03)
+    print()
+
+    for el in example:
+        Try03.enqueue(el)
+    print(Try03)
+    for _ in range(3):
+        Try03.dequeue()
+    print(Try03)
+
+    print('\n' * 2)
+
+    Try04 = QueueCycle(2)
+    example = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+    for el in example:
+        print(Try04)
+        Try04.enqueue(el)
