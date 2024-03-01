@@ -1,4 +1,6 @@
 from LinkList import LinkList
+from LinkListvTwo import LinkListvTwo
+from TwoDirectionLinkList import TwoDirectionLinkList
 
 
 if __name__ == '__main__':
@@ -20,3 +22,51 @@ if __name__ == '__main__':
     print(Lista01)
     Lista01.del_at_position(1)
     print(Lista01)
+
+    # test LinkList Two
+    print('-' * 10 + '\n' * 2)
+    link = LinkListvTwo()
+    link.add_last('a')
+    print(link)
+    link.del_first()
+    print(link)
+    link.del_last()
+    print(link)
+    link.add_first('A')
+    print(link)
+    link.del_last()
+    print(link)
+    link.add_last('B')
+    print(link)
+    link.add_last('C')
+    print(link)
+    link.add_first('Z')
+    print(link)
+    link.del_last()
+    print(link)
+
+    link.del_first()
+    print(link)
+
+    # test Two direction LinkList
+    link = TwoDirectionLinkList()
+    link.add_last('a')
+    print(link)
+    link.del_first()
+    print(link)
+    link.del_last()
+    print(link)
+    link.add_first('A')
+    print(link)
+    link.del_last()
+    print(link)
+    link.add_last('B')
+    print(link)
+    link.add_last('C')
+    print(link)
+    link.add_first('A')
+    print(link)
+    link.del_last()
+    print(link)
+    link.del_first()
+    print(link)
