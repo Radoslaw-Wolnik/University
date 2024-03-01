@@ -1,6 +1,29 @@
 from LinkList import LinkList
 from LinkListvTwo import LinkListvTwo
 from TwoDirectionLinkList import TwoDirectionLinkList
+from random import randint
+
+
+def insertion_sort(LinkList):
+    start = LinkList.head
+    current = LinkList.head
+    count = 0
+    while current is not None:
+        marker = start
+        at = 0
+        while marker != current:
+            if current.item < marker.item:
+                break
+            marker = marker.next
+            at += 1
+        if at != count:
+            LinkList.insert_at_position(current.item, at)
+            LinkList.del_at_position(count)
+        # print(count, current.item, at)
+        # print(NodeList)
+        current = current.next
+        count += 1
+    pass
 
 
 if __name__ == '__main__':
@@ -70,3 +93,23 @@ if __name__ == '__main__':
     print(link)
     link.del_first()
     print(link)
+
+    # test insertion sort sort link list --------------------------------------------------------
+    test01 = [-19, 12, 19, 14, -12, -13, 18, 3, -4, -7]
+    test = [randint(-20, 20) for _ in range(10)]
+    ToSort = LinkList()
+    randSort = LinkList()
+
+    for el in test01:
+        ToSort.add_last(el)
+    for el in test:
+        randSort.add_last(el)
+
+    print(ToSort)
+    insertion_sort(ToSort)
+    print(ToSort)
+    print('\n-----------------------------------------\n')
+
+    print(randSort)
+    insertion_sort(randSort)
+    print(randSort)
