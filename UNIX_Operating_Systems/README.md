@@ -15,28 +15,7 @@ Rozwiazania do list z zadaniami
 - [x] Lab10 - Kolokwium
 
 ## ToDo
-- Change files from txt into individual projects containing number of programs/scripts
-- [ ] Lab01 
-- [ ] Lab02 
-- [ ] Lab03 
-- [ ] Lab04 
-- [ ] Lab05 
-- [ ] Lab06 
-- [ ] Lab07 
-- [ ] Lab08 
-- [ ] Lab09 
-- [ ] Lab10
-- Code review - english or polish not both
-- [ ] Lab01 
-- [ ] Lab02 
-- [ ] Lab03 
-- [ ] Lab04 
-- [ ] Lab05 
-- [ ] Lab06 
-- [ ] Lab07 
-- [ ] Lab08 
-- [ ] Lab09 
-- [ ] Lab10
+- [ ] Lab10 cars as threads on road and not that weird thing
 
 ## Authors and acknowledgment
 Prowadzacy: L. Mielewczyk
