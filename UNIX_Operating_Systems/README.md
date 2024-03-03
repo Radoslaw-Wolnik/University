@@ -15,7 +15,7 @@ Rozwiazania do list z zadaniami
 - [x] Lab10 - Kolokwium
 
 ## ToDo
-- [ ] Lab10 cars as threads on road and not that weird thing
+- [ ] Lab09 cars as threads on road and not that weird thing
 
 ## Authors and acknowledgment
 Prowadzacy: L. Mielewczyk
