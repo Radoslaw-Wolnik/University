@@ -8,7 +8,6 @@ class BinaryTreeNodeList(object):
     def preorder_print(self, start, visit):
         """Root->Left->Right"""
         if start:
-            print(start)
             visit += (str(start.data()) + "-")
             visit = self.preorder_print(start.left(), visit)
             visit = self.preorder_print(start.right(), visit)
