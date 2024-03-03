@@ -8,7 +8,7 @@ _Implementation of basic data structures in Python_
 - [x] 03_LinkList
 - [x] 04_Iterator
 - [x] 05_HashTables
-- [ ] 06_BinaryTrees
-- [ ] 07_Heap
+- [x] 06_BinaryTrees
+- [x] 07_Heap
 
 
