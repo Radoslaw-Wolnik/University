@@ -1,0 +1,52 @@
+.intel_syntax noprefix
+.global main
+.text
+main:
+	; mnożymy przez ebx
+        mov ebx, 2024
+	
+	; konwersja przekazanego argumentu przy wywołaniu na liczbę
+        mov eax, [esp + 8]
+        mov eax, [eax + 4]
+        push eax
+
+        call atoi
+        add esp, 4
+
+	; wywołąnie naszej funkcji
+        push eax
+        push ebx
+        call f
+        add esp, 8
+
+	; printf
+        push eax
+        mov eax, OFFSET msg
+        push eax
+        call printf
+        add esp, 8
+        mov eax, 0
+        ret
+
+        f:
+                mov eax, [esp + 8] ; pobieramy mnożnik
+                mov ecx, [esp + 4] ; pobieramy liczbe do mnożenia z stosu
+                cmp ecx, 0
+                je finish
+
+                shr ecx, 1 ; przesuwamy mnożnik jeden w prawo - dzielimy na 2
+                shl eax, 1 ; przesuwamy liczbe jeden w lewo - mnożymy przez 2
+
+                push eax 
+                push ecx
+                call f
+                add esp, 8
+
+                ret
+        finish:
+                mov eax, [esp + 8]
+                ret
+
+.data
+        msg:
+        .asciz "Wynik %i\n"

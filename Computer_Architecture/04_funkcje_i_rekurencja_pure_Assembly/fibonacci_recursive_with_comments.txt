@@ -1,0 +1,85 @@
+.intel_syntax noprefix
+.global main
+.text
+main:
+        ; zmienienie przekazanego argumentu przy wywolaniu programu na liczbe
+        mov eax, [esp + 8]
+        mov eax, [eax + 4]
+        push eax
+
+        call atoi
+        add esp, 4
+
+        ; wywoalanie ciagu fibonacziego
+        push eax
+        call f
+
+        ; zamiana argumentow do print zeby byla dobra kolejnosc
+        pop eax
+        pop ebx
+        push eax
+        push ebx
+
+        ; push message on stack to call printf
+        mov eax, OFFSET msg
+        push eax
+        call printf
+
+        ; czyścimy stos i zwracamy 0
+        add esp, 12
+        mov eax, 0
+        ret
+
+        f:
+                ; czytamy przekazany arg i porownujemy do 2 - jesli wieksze to skok, mniejsze rowne to zwracamy 1 na stos
+                mov eax, [esp + 4]
+                cmp eax, 2
+                jg skok
+                jbe zwroc
+
+		; i have no idea why we are not switching elements on stack here 
+		; but accidently i did not include it and it works now 
+                ret
+
+        zwroc:
+                ; zrzucamy ret reference, push 1, push ret reference
+                pop eax
+                push 1
+                push eax
+                ret
+
+        skok:
+                ; czytamy z stosu liczbe, zmniejszamy o 1 i wywolujemy pierwsza rekurencje
+                ; nasz stos: | n | ret main ??
+                mov eax, [esp + 4]
+                dec eax
+                push eax
+                call f
+
+                ; clean stos, wrzucilismy n-1 i dostalismy jakas wartosc wiec czyscimy n-1
+                ; nasz stos: | n | ret main | n-1 | wynik fib(n-1)
+                pop eax
+                add esp, 4
+                push eax
+
+                ; czytamy z stosu liczbe i zmniejszamy o 2, ta sama liczba co na poczatku stosu jedyna roznica jest taka ze mamy jeszcze wynik pierwszej rekurencji na stosie
+                mov eax, [esp + 8]
+                dec eax
+                dec eax
+                push eax
+                call f
+
+                ; nasz stos: | n | ret main | wynik fib(n-1) | n-2 | wynik fib(n-2)
+                pop eax
+                add esp, 4
+                pop ebx
+		add eax, ebx
+
+                pop ebx
+                push eax
+                push ebx
+                ret
+
+.data
+        msg:
+        .asciz "Ciag fibbonaciego wyraz %i rowny %i\n"

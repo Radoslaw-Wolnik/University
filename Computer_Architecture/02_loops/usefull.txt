@@ -1,0 +1,36 @@
+nano
+cat
+touch
+mkdir
+
+
+// enviorement in linux installed 
+// geany file_name.c &
+// gcc file_name.c -o out_file_name
+
+// gcc -masm=intel -save-temps file_name.c
+// a-first.s - in assembly compiled code
+
+
+
+# include <stdio.h>
+int main() {
+    int x = 2024;
+    int y;
+    // y = x + x;
+    // wstwka in assembly: y = x + x
+    asm (
+        "mov eax, %1;"
+        "add eax, eax;"
+        "mov %0, eax;"
+        : "=r" (y)
+        : "r" (x) 
+        : "eax", "ebx"
+    );
+    // "kod w assemblerze"
+    // : wyjscie - gdzie zapisac wyjscie naszej wstawki
+    // : wejscie do naszej wstawki - co potrzebujemy z programu; w tej linijce piszemy co czytamy, "r" - register - zostanie zapisane do jakiegos rejestru, "m" - memory
+    // : w ostatniej linijce lista rejestrow jakich uzywamy
+    printf("x = %i, y = %i \n", x, y);
+    return 0;
+}
